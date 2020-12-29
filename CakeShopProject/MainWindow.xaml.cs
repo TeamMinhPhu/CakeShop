@@ -34,7 +34,7 @@ namespace CakeShopProject
 			MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 			MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
 
-			this.content.Navigate(new HomePage());
+			this.content.Navigate(new CakePage());
 		}
 
 		
@@ -50,20 +50,6 @@ namespace CakeShopProject
 				// do nothing
 			}
 		}
-
-		#region "Navigate"
-		private void infoButton_MouseUp(object sender, MouseButtonEventArgs e)
-		{
-			this.content.Navigate(new InfoPage());
-		}
-		private void settingsButton_MouseUp(object sender, MouseButtonEventArgs e)
-		{
-			var settings = new SettingScreen();
-			settings.ShowDialog();
-		}
-
-
-		#endregion
 
 
 		#region "Title Bar Buttons"
@@ -112,14 +98,47 @@ namespace CakeShopProject
 			config.Save(ConfigurationSaveMode.Minimal);
 		}
 
-		private void addButton_MouseUp(object sender, MouseButtonEventArgs e)
+
+		#region "Navigate"
+		private void infoButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
+			this.content.Navigate(new InfoPage());
+		}
+		private void settingsButton_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			Splash.Visibility = Visibility.Visible;
+			var settings = new SettingScreen();
+			settings.ShowDialog();
+			Splash.Visibility = Visibility.Collapsed;
+		}
+
+		private void cakeList_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			this.content.Navigate(new CakePage());
+		}
+
+		private void addCakeButton_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			this.content.Navigate(new AddCakePage());
 
 		}
 
-		private void content_Navigated(object sender, NavigationEventArgs e)
+		private void statisticsButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-
+			this.content.Navigate(new StatisticsPage());
 		}
+
+		private void receiptListButton_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			this.content.Navigate(new ReceiptPage());
+		}
+
+		private void addReceiptButton_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			this.content.Navigate(new AddReceiptPage());
+		}
+		#endregion
+
+
 	}
 }

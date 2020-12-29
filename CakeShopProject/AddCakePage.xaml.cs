@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace CakeShopProject
 {
 	/// <summary>
-	/// Interaction logic for HomePage.xaml
+	/// Interaction logic for AddCakePage.xaml
 	/// </summary>
-	public partial class HomePage : Page
+	public partial class AddCakePage : Page
 	{
-		public HomePage()
+		public AddCakePage()
 		{
 			InitializeComponent();
 		}

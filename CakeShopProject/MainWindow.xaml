@@ -41,13 +41,14 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Border BorderThickness="1" BorderBrush="{DynamicResource SecondaryHueMidBrush}" Padding="0 2 0 0">
-        <DockPanel>
-            <!-- Title bar -->
-            <Grid Name="TitleBar" Height="30" VerticalAlignment="Top" DockPanel.Dock="Top" Background="{DynamicResource PrimaryHueDarkBrush}" Margin="0 -2 0 0">
-                <TextBlock Text="We Split" VerticalAlignment="Center" FontWeight="Bold" Foreground="#fff" Margin="10 0 0 0"/>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button x:Name="minimizeProgramButton"
+    <Border BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueMidBrush}" Padding="0 2 0 0">
+        <Grid x:Name="mainScreen">
+            <DockPanel>
+                <!-- Title bar -->
+                <Grid Name="TitleBar" Height="30" VerticalAlignment="Top" DockPanel.Dock="Top" Background="{DynamicResource PrimaryHueDarkBrush}" Margin="0 -2 0 0">
+                    <TextBlock Text="We Split" VerticalAlignment="Center" FontWeight="Bold" Foreground="#fff" Margin="10 0 0 0"/>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <Button x:Name="minimizeProgramButton"
                     Panel.ZIndex="10"
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Right"
@@ -56,12 +57,12 @@
                     BorderThickness="0"
                     Style="{StaticResource closeButton}" Click="minimizeProgramButton_Click">
 
-                        <Grid Width="12" Height="12">
-                            <Image Source="Resources/Icons/minimize.png" RenderOptions.BitmapScalingMode="HighQuality"
+                            <Grid Width="12" Height="12">
+                                <Image Source="Resources/Icons/minimize.png" RenderOptions.BitmapScalingMode="HighQuality"
                                 Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                    <Button x:Name="maximizeProgramButton"
+                            </Grid>
+                        </Button>
+                        <Button x:Name="maximizeProgramButton"
                     Panel.ZIndex="10"
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Right"
@@ -70,13 +71,13 @@
                     BorderThickness="0"
                     Style="{StaticResource closeButton}" Click="maximizeProgramButton_Click">
 
-                        <Grid Width="12" Height="12">
-                            <Image Name="maximizeButtonImage" Source="Resources/Icons/maximize.png" RenderOptions.BitmapScalingMode="HighQuality"
+                            <Grid Width="12" Height="12">
+                                <Image Name="maximizeButtonImage" Source="Resources/Icons/maximize.png" RenderOptions.BitmapScalingMode="HighQuality"
                                 Stretch="Fill"/>
-                        </Grid>
-                    </Button>
+                            </Grid>
+                        </Button>
 
-                    <Button x:Name="closeProgramButton"
+                        <Button x:Name="closeProgramButton"
                     Panel.ZIndex="10"
                     VerticalAlignment="Center" 
                     HorizontalAlignment="Right"
@@ -85,94 +86,98 @@
                     BorderThickness="0"
                     Style="{StaticResource closeButton}" Click="closeProgramButton_Click">
 
-                        <Grid Width="12" Height="12">
-                            <Image Source="Resources/Icons/close.png" RenderOptions.BitmapScalingMode="HighQuality"
+                            <Grid Width="12" Height="12">
+                                <Image Source="Resources/Icons/close.png" RenderOptions.BitmapScalingMode="HighQuality"
                                 Stretch="Fill"/>
-                        </Grid>
-                    </Button>
-                </StackPanel>
-            </Grid>
-            <!-- end title bar-->
-            <Grid DockPanel.Dock="Top" Background="AliceBlue">
-                <StackPanel Background="AliceBlue" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="1">
-                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0">
-                                <ListBoxItem Padding="0" Cursor="Hand" MouseUp="infoButton_MouseUp">
-                                    <materialDesign:PackIcon Width="50" Height="50" Kind="InfoCircleOutline" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                    </materialDesign:PackIcon>
-                                </ListBoxItem>
-                                <Separator Margin="0 1"></Separator>
-                                <TextBlock HorizontalAlignment="Center">Thông tin</TextBlock>
-                            </StackPanel>
-                            <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0" >
-                                <ListBoxItem Padding="0" Cursor="Hand" MouseUp="settingsButton_MouseUp">
-                                    <materialDesign:PackIcon Width="50" Height="50" Kind="Settings" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                    </materialDesign:PackIcon>
-                                </ListBoxItem>
-                                <Separator Margin="0 1"></Separator>
-                                <TextBlock HorizontalAlignment="Center">Cài đặt</TextBlock>
-                            </StackPanel>
-                        </StackPanel>
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Center">Phần mềm</TextBlock>
+                            </Grid>
+                        </Button>
                     </StackPanel>
-                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
-                    <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0">
-                                <ListBoxItem Padding="0" Cursor="Hand" MouseUp="infoButton_MouseUp">
-                                    <materialDesign:PackIcon Width="50" Height="50" Kind="Muffin" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                    </materialDesign:PackIcon>
-                                </ListBoxItem>
-                                <Separator Margin="0 1"></Separator>
-                                <TextBlock HorizontalAlignment="Center">Kho bánh</TextBlock>
+                </Grid>
+                <!-- end title bar-->
+                <Grid DockPanel.Dock="Top" Background="AliceBlue">
+                    <StackPanel Background="AliceBlue" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="1">
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0">
+                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="infoButton_MouseUp">
+                                        <materialDesign:PackIcon Width="50" Height="50" Kind="InfoCircleOutline" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                        </materialDesign:PackIcon>
+                                    </ListBoxItem>
+                                    <Separator Margin="0 1"></Separator>
+                                    <TextBlock HorizontalAlignment="Center">Thông tin</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0" >
+                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="settingsButton_MouseUp">
+                                        <materialDesign:PackIcon Width="50" Height="50" Kind="Settings" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                        </materialDesign:PackIcon>
+                                    </ListBoxItem>
+                                    <Separator Margin="0 1"></Separator>
+                                    <TextBlock HorizontalAlignment="Center">Cài đặt</TextBlock>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0" >
-                                <ListBoxItem Padding="0" Cursor="Hand" MouseUp="settingsButton_MouseUp">
-                                    <materialDesign:PackIcon Width="50" Height="50" Kind="AddCircle" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                    </materialDesign:PackIcon>
-                                </ListBoxItem>
-                                <Separator Margin="0 1"></Separator>
-                                <TextBlock HorizontalAlignment="Center">Thêm</TextBlock>
-                            </StackPanel>    
-                            <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0" >
-                                <ListBoxItem Padding="0" Cursor="Hand" MouseUp="settingsButton_MouseUp">
-                                    <materialDesign:PackIcon Width="50" Height="50" Kind="ChartFinance" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                    </materialDesign:PackIcon>
-                                </ListBoxItem>
-                                <Separator Margin="0 1"></Separator>
-                                <TextBlock HorizontalAlignment="Center">Thống kê</TextBlock>
-                            </StackPanel>
+                            <TextBlock Foreground="Gray" HorizontalAlignment="Center">Phần mềm</TextBlock>
                         </StackPanel>
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Center">Cửa hàng</TextBlock>
-                    </StackPanel>
-                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/> <StackPanel Orientation="Vertical">
-                        <StackPanel Orientation="Horizontal">
-                            <StackPanel Width="54" HorizontalAlignment="Left" Margin="5 10 5 0">
-                                <ListBoxItem Padding="0" Cursor="Hand" MouseUp="infoButton_MouseUp" HorizontalAlignment="Center">
-                                    <materialDesign:PackIcon Width="50" Height="50" Kind="PlaylistEdit" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                    </materialDesign:PackIcon>
-                                </ListBoxItem>
-                                <Separator Margin="0 1"></Separator>
-                                <TextBlock HorizontalAlignment="Center">Danh sách</TextBlock>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0">
+                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="cakeList_MouseUp">
+                                        <materialDesign:PackIcon Width="50" Height="50" Kind="Muffin" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                        </materialDesign:PackIcon>
+                                    </ListBoxItem>
+                                    <Separator Margin="0 1"></Separator>
+                                    <TextBlock HorizontalAlignment="Center">Kho bánh</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0" >
+                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="addCakeButton_MouseUp">
+                                        <materialDesign:PackIcon Width="50" Height="50" Kind="AddCircle" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                        </materialDesign:PackIcon>
+                                    </ListBoxItem>
+                                    <Separator Margin="0 1"></Separator>
+                                    <TextBlock HorizontalAlignment="Center">Thêm</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0" >
+                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="statisticsButton_MouseUp">
+                                        <materialDesign:PackIcon Width="50" Height="50" Kind="ChartFinance" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                        </materialDesign:PackIcon>
+                                    </ListBoxItem>
+                                    <Separator Margin="0 1"></Separator>
+                                    <TextBlock HorizontalAlignment="Center">Thống kê</TextBlock>
+                                </StackPanel>
                             </StackPanel>
-                            <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0">
-                                <ListBoxItem Padding="0" Cursor="Hand" MouseUp="settingsButton_MouseUp">
-                                    <materialDesign:PackIcon Width="50" Height="50" Kind="PlaylistAdd" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                    </materialDesign:PackIcon>
-                                </ListBoxItem>
-                                <Separator Margin="0 1"></Separator>
-                                <TextBlock HorizontalAlignment="Center">Tạo mới</TextBlock>
-                            </StackPanel>
+                            <TextBlock Foreground="Gray" HorizontalAlignment="Center">Cửa hàng</TextBlock>
                         </StackPanel>
-                        <TextBlock Foreground="Gray" HorizontalAlignment="Center">Hóa đơn</TextBlock>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Width="54" HorizontalAlignment="Left" Margin="5 10 5 0">
+                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="receiptListButton_MouseUp" HorizontalAlignment="Center">
+                                        <materialDesign:PackIcon Width="50" Height="50" Kind="PlaylistEdit" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                        </materialDesign:PackIcon>
+                                    </ListBoxItem>
+                                    <Separator Margin="0 1"></Separator>
+                                    <TextBlock HorizontalAlignment="Center">Danh sách</TextBlock>
+                                </StackPanel>
+                                <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0">
+                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="addReceiptButton_MouseUp">
+                                        <materialDesign:PackIcon Width="50" Height="50" Kind="PlaylistAdd" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                        </materialDesign:PackIcon>
+                                    </ListBoxItem>
+                                    <Separator Margin="0 1"></Separator>
+                                    <TextBlock HorizontalAlignment="Center">Tạo mới</TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                            <TextBlock Foreground="Gray" HorizontalAlignment="Center">Hóa đơn</TextBlock>
+                        </StackPanel>
+                        <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
                     </StackPanel>
-                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
-                </StackPanel>
-                
-            </Grid>
-            <Frame NavigationUIVisibility="Hidden" Name="content" Navigated="content_Navigated"></Frame>
-        </DockPanel>
+
+                </Grid>
+                <Frame NavigationUIVisibility="Hidden" Name="content"></Frame>
+            </DockPanel>
+            <Border x:Name="Splash" Grid.RowSpan="4" Opacity=".2" Visibility="Collapsed" Background="Black">
+            </Border>
+        </Grid>
     </Border>
 </Window>

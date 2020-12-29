@@ -95,6 +95,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddCakePage.xaml.cs">
+      <DependentUpon>AddCakePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddReceiptPage.xaml.cs">
       <DependentUpon>AddReceiptPage.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,9 @@
     </Compile>
     <Compile Include="CAKE.cs">
       <DependentUpon>CakeShopDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CakePage.xaml.cs">
+      <DependentUpon>CakePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="CakeShopDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -137,11 +143,15 @@
     <Compile Include="TYPE.cs">
       <DependentUpon>CakeShopDB.tt</DependentUpon>
     </Compile>
+    <Page Include="AddCakePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddReceiptPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="HomePage.xaml">
+    <Page Include="CakePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -158,9 +168,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converter.cs" />
-    <Compile Include="HomePage.xaml.cs">
-      <DependentUpon>HomePage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
