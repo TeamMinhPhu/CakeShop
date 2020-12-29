@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Admin\source\repos\CakeShopProject\CakeShopProject\obj\Debug\
+C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\
 CakeShopProject
 none
 false
 DEBUG;TRACE
-C:\Users\Admin\source\repos\CakeShopProject\CakeShopProject\App.xaml
+C:\Users\vuanh\Documents\CakeShop\CakeShopProject\App.xaml
 62003948867
-
-1270649575
-16-1671924096
+41934860020
+19-897525320
+23-1557494353
 AddReceiptPage.xaml;HomePage.xaml;InfoPage.xaml;MainWindow.xaml;ReceiptPage.xaml;StatisticsPage.xaml;
 
-True
+False
 
