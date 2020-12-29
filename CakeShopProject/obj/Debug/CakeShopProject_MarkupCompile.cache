@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\Admin\source\repos\dophu1402\CakeShop\CakeShopProject\obj\Debug\
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\
 CakeShopProject
 none
 false
 DEBUG;TRACE
-C:\Users\Admin\source\repos\dophu1402\CakeShop\CakeShopProject\App.xaml
-62003948867
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\App.xaml
+71833648350
 
-1270649575
-16-2085722289
-AddReceiptPage.xaml;HomePage.xaml;InfoPage.xaml;MainWindow.xaml;ReceiptPage.xaml;StatisticsPage.xaml;
+1283405245
+16-847879919
+AddReceiptPage.xaml;HomePage.xaml;InfoPage.xaml;MainWindow.xaml;ReceiptPage.xaml;SettingsScreen.xaml;StatisticsPage.xaml;
 
-True
+False
 

@@ -23,21 +23,6 @@ namespace CakeShopProject
     /// </summary>
     public partial class MainWindow : Window
     {
-		bool _menu_state_closed = true;
-
-		public class MenuTab
-        {
-            public string Content { get; set; }
-            public string Icon { get; set; }
-
-        }
-
-        BindingList<MenuTab> menuTabs = new BindingList<MenuTab>() { 
-            new MenuTab{Content = "TRANG CHỦ", Icon = "Resources/Icons/home.png"},
-            new MenuTab{Content = "ĐƠN HÀNG", Icon = "Resources/Icons/orders.png"},
-            new MenuTab{Content = "THỐNG KÊ", Icon = "Resources/Icons/statistics.png"},
-            new MenuTab{Content = "GIỚI THIỆU", Icon = "Resources/Icons/about.png"},
-        };
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -49,26 +34,10 @@ namespace CakeShopProject
 			MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 			MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
 
-			this.menuTab.ItemsSource = menuTabs;
 			this.content.Navigate(new HomePage());
 		}
 
-		//Menu Open - Collapse
-		private void menuButton_Click(object sender, RoutedEventArgs e)
-		{
-			if (_menu_state_closed)
-			{
-				Storyboard sb = this.FindResource("openMenu") as Storyboard;
-				sb.Begin();
-			}
-			else
-			{
-				Storyboard sb = this.FindResource("closeMenu") as Storyboard;
-				sb.Begin();
-			}
-			_menu_state_closed = !_menu_state_closed;
-		}
-
+		
 		private void Window_MouseDown(object sender, MouseButtonEventArgs e)
 		{
 			try
@@ -82,25 +51,19 @@ namespace CakeShopProject
 			}
 		}
 
-		private void selectedTab(object sender, MouseButtonEventArgs e)
+		#region "Navigate"
+		private void infoButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			var item = (sender as ListView).SelectedIndex;
-			switch (item)
-			{
-				case 0:
-					content.Navigate(new HomePage());
-					break;
-				case 1:
-					content.Navigate(new ReceiptPage());
-					break;				
-				case 2:
-					content.Navigate(new StatisticsPage());
-					break;		
-				case 3:
-					content.Navigate(new InfoPage());
-					break;
-			}
+			this.content.Navigate(new InfoPage());
 		}
+		private void settingsButton_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+			var settings = new SettingScreen();
+			settings.ShowDialog();
+		}
+
+
+		#endregion
 
 
 		#region "Title Bar Buttons"
@@ -147,6 +110,16 @@ namespace CakeShopProject
 			config.AppSettings.Settings["Width"].Value = this.Width.ToString();
 			config.AppSettings.Settings["Height"].Value = this.Height.ToString();
 			config.Save(ConfigurationSaveMode.Minimal);
+		}
+
+		private void addButton_MouseUp(object sender, MouseButtonEventArgs e)
+		{
+
+		}
+
+		private void content_Navigated(object sender, NavigationEventArgs e)
+		{
+
 		}
 	}
 }

@@ -1,0 +1,79 @@
+﻿<Window x:Class="CakeShopProject.SettingScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CakeShopProject"
+        mc:Ignorable="d"
+ Height="150" Width="300"
+        WindowStartupLocation="CenterScreen" WindowStyle="None"
+        AllowsTransparency="True"
+        >
+    <Window.Resources>
+        <!--Close button - turnoff button style-->
+        <Style x:Key="closeButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"></Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#54545454"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Border x:Name="Border" BorderThickness="1" BorderBrush="{DynamicResource PrimaryHueDarkBrush}">
+        <StackPanel>
+            <Grid Height="30" Name="TitleBar" Margin="0 0 0 20" Background="{DynamicResource PrimaryHueMidBrush}">
+                <TextBlock Text="Settings" VerticalAlignment="Center" FontWeight="Bold" Foreground="#fff" Margin="10 0 0 0"/>
+                <Button x:Name="closeButton"
+                    Panel.ZIndex="10"
+                    VerticalAlignment="Center" 
+                    HorizontalAlignment="Right"
+                    Margin="0"
+                    Height="30" Width="40"
+                    BorderThickness="0"
+                    Padding="0"
+                    Style="{StaticResource closeButton}" Click="closeButton_Click">
+
+                    <Grid Width="12" Height="12">
+                        <Image Source="Resources/Icons/close.png" RenderOptions.BitmapScalingMode="HighQuality"
+                                Stretch="Fill"/>
+                    </Grid>
+                </Button>
+            </Grid>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 0">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" FontSize="15" Foreground="{DynamicResource  PrimaryHueMidBrush}">
+                        Hiển thị fact khi khởi động
+                    </Label>
+                    <ToggleButton Grid.Column="1" Name="splashScreen" Click="splashScreen_Click">
+                        <ToggleButton.RenderTransform>
+                            <ScaleTransform ScaleX="1.2" ScaleY="1.2">
+                            </ScaleTransform>
+                        </ToggleButton.RenderTransform>
+                    </ToggleButton>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0 20 0 0">
+                    <Button Width="70" Height="25" Padding="0" Name="cancelButton" Foreground="White" Margin="0 0 5 0" Click="cancelButton_Click">Cancel</Button>
+                    <Button Width="70" Height="25" Padding="0" Name="applyButton" Click="applyButton_Click" Foreground="White" Margin="5 0 0 0">Apply</Button>
+                </StackPanel>
+            </StackPanel>
+        </StackPanel>
+    </Border>
+</Window>
+
