@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CakeShopDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BILL">
+          <Key>
+            <PropertyRef Name="BILL_ID" />
+          </Key>
+          <Property Name="BILL_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CUSTOMER_NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="PHONE" Type="varchar" MaxLength="10" />
+          <Property Name="EMAIL" Type="varchar" MaxLength="50" />
+          <Property Name="ADDRESS" Type="ntext" />
+          <Property Name="NOTE" Type="ntext" />
+          <Property Name="BILLTYPE" Type="int" />
+          <Property Name="PREPAID_MONEY" Type="money" />
+          <Property Name="COMPLETED_DATE" Type="datetime" />
+          <Property Name="STATUS" Type="int" />
+        </EntityType>
+        <EntityType Name="BILLDETAIL">
+          <Key>
+            <PropertyRef Name="BILL_ID" />
+            <PropertyRef Name="CAKE_ID" />
+          </Key>
+          <Property Name="BILL_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CAKE_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="QUANTITY" Type="int" />
+        </EntityType>
+        <EntityType Name="CAKE">
+          <Key>
+            <PropertyRef Name="CAKE_ID" />
+          </Key>
+          <Property Name="CAKE_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CAKE_NAME" Type="nvarchar" MaxLength="100" />
+          <Property Name="CAKE_DESCRIPTION" Type="ntext" />
+          <Property Name="CAKE_PRICE" Type="money" />
+          <Property Name="ADDED_DATE" Type="datetime" />
+          <Property Name="IMAGE_LINK" Type="varchar" MaxLength="100" />
+          <Property Name="EXIST_STATUS" Type="bit" />
+        </EntityType>
+        <EntityType Name="TYPE">
+          <Key>
+            <PropertyRef Name="TYPE_ID" />
+          </Key>
+          <Property Name="TYPE_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="TYPE_NAME" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="TYPE_CAKE">
+          <Key>
+            <PropertyRef Name="TYPE_ID" />
+            <PropertyRef Name="CAKE_ID" />
+          </Key>
+          <Property Name="TYPE_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="CAKE_ID" Type="char" MaxLength="10" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BD_B">
+          <End Role="BILL" Type="Self.BILL" Multiplicity="1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BILL">
+              <PropertyRef Name="BILL_ID" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="BILL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BD_C">
+          <End Role="CAKE" Type="Self.CAKE" Multiplicity="1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAKE">
+              <PropertyRef Name="CAKE_ID" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="CAKE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TC_C">
+          <End Role="CAKE" Type="Self.CAKE" Multiplicity="1" />
+          <End Role="TYPE_CAKE" Type="Self.TYPE_CAKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAKE">
+              <PropertyRef Name="CAKE_ID" />
+            </Principal>
+            <Dependent Role="TYPE_CAKE">
+              <PropertyRef Name="CAKE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TC_T">
+          <End Role="TYPE" Type="Self.TYPE" Multiplicity="1" />
+          <End Role="TYPE_CAKE" Type="Self.TYPE_CAKE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPE">
+              <PropertyRef Name="TYPE_ID" />
+            </Principal>
+            <Dependent Role="TYPE_CAKE">
+              <PropertyRef Name="TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CakeShopDBModelStoreContainer">
+          <EntitySet Name="BILL" EntityType="Self.BILL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BILLDETAIL" EntityType="Self.BILLDETAIL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAKE" EntityType="Self.CAKE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TYPE_CAKE" EntityType="Self.TYPE_CAKE" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BD_B" Association="Self.FK_BD_B">
+            <End Role="BILL" EntitySet="BILL" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BD_C" Association="Self.FK_BD_C">
+            <End Role="CAKE" EntitySet="CAKE" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TC_C" Association="Self.FK_TC_C">
+            <End Role="CAKE" EntitySet="CAKE" />
+            <End Role="TYPE_CAKE" EntitySet="TYPE_CAKE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TC_T" Association="Self.FK_TC_T">
+            <End Role="TYPE" EntitySet="TYPE" />
+            <End Role="TYPE_CAKE" EntitySet="TYPE_CAKE" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CakeShopDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BILL">
+          <Key>
+            <PropertyRef Name="BILL_ID" />
+          </Key>
+          <Property Name="BILL_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CUSTOMER_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PHONE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="EMAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ADDRESS" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NOTE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="BILLTYPE" Type="Int32" />
+          <Property Name="PREPAID_MONEY" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="COMPLETED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="STATUS" Type="Int32" />
+          <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BD_B" FromRole="BILL" ToRole="BILLDETAIL" />
+        </EntityType>
+        <EntityType Name="BILLDETAIL">
+          <Key>
+            <PropertyRef Name="BILL_ID" />
+            <PropertyRef Name="CAKE_ID" />
+          </Key>
+          <Property Name="BILL_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CAKE_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="QUANTITY" Type="Int32" />
+          <NavigationProperty Name="BILL" Relationship="Self.FK_BD_B" FromRole="BILLDETAIL" ToRole="BILL" />
+          <NavigationProperty Name="CAKE" Relationship="Self.FK_BD_C" FromRole="BILLDETAIL" ToRole="CAKE" />
+        </EntityType>
+        <EntityType Name="CAKE">
+          <Key>
+            <PropertyRef Name="CAKE_ID" />
+          </Key>
+          <Property Name="CAKE_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="CAKE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CAKE_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CAKE_PRICE" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ADDED_DATE" Type="DateTime" Precision="3" />
+          <Property Name="IMAGE_LINK" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="EXIST_STATUS" Type="Boolean" />
+          <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BD_C" FromRole="CAKE" ToRole="BILLDETAIL" />
+          <NavigationProperty Name="TYPEs" Relationship="Self.TYPE_CAKE" FromRole="CAKE" ToRole="TYPE" />
+        </EntityType>
+        <EntityType Name="TYPE">
+          <Key>
+            <PropertyRef Name="TYPE_ID" />
+          </Key>
+          <Property Name="TYPE_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="TYPE_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CAKEs" Relationship="Self.TYPE_CAKE" FromRole="TYPE" ToRole="CAKE" />
+        </EntityType>
+        <Association Name="FK_BD_B">
+          <End Role="BILL" Type="Self.BILL" Multiplicity="1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BILL">
+              <PropertyRef Name="BILL_ID" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="BILL_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BD_C">
+          <End Role="CAKE" Type="Self.CAKE" Multiplicity="1" />
+          <End Role="BILLDETAIL" Type="Self.BILLDETAIL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAKE">
+              <PropertyRef Name="CAKE_ID" />
+            </Principal>
+            <Dependent Role="BILLDETAIL">
+              <PropertyRef Name="CAKE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="TYPE_CAKE">
+          <End Role="CAKE" Type="Self.CAKE" Multiplicity="*" />
+          <End Role="TYPE" Type="Self.TYPE" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="CakeShopDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BILLs" EntityType="Self.BILL" />
+          <EntitySet Name="BILLDETAILs" EntityType="Self.BILLDETAIL" />
+          <EntitySet Name="CAKEs" EntityType="Self.CAKE" />
+          <EntitySet Name="TYPEs" EntityType="Self.TYPE" />
+          <AssociationSet Name="FK_BD_B" Association="Self.FK_BD_B">
+            <End Role="BILL" EntitySet="BILLs" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BD_C" Association="Self.FK_BD_C">
+            <End Role="CAKE" EntitySet="CAKEs" />
+            <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
+          </AssociationSet>
+          <AssociationSet Name="TYPE_CAKE" Association="Self.TYPE_CAKE">
+            <End Role="CAKE" EntitySet="CAKEs" />
+            <End Role="TYPE" EntitySet="TYPEs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CakeShopDBModelStoreContainer" CdmEntityContainer="CakeShopDBEntities">
+          <EntitySetMapping Name="BILLs">
+            <EntityTypeMapping TypeName="CakeShopDBModel.BILL">
+              <MappingFragment StoreEntitySet="BILL">
+                <ScalarProperty Name="BILL_ID" ColumnName="BILL_ID" />
+                <ScalarProperty Name="CUSTOMER_NAME" ColumnName="CUSTOMER_NAME" />
+                <ScalarProperty Name="PHONE" ColumnName="PHONE" />
+                <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="ADDRESS" ColumnName="ADDRESS" />
+                <ScalarProperty Name="NOTE" ColumnName="NOTE" />
+                <ScalarProperty Name="BILLTYPE" ColumnName="BILLTYPE" />
+                <ScalarProperty Name="PREPAID_MONEY" ColumnName="PREPAID_MONEY" />
+                <ScalarProperty Name="COMPLETED_DATE" ColumnName="COMPLETED_DATE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BILLDETAILs">
+            <EntityTypeMapping TypeName="CakeShopDBModel.BILLDETAIL">
+              <MappingFragment StoreEntitySet="BILLDETAIL">
+                <ScalarProperty Name="BILL_ID" ColumnName="BILL_ID" />
+                <ScalarProperty Name="CAKE_ID" ColumnName="CAKE_ID" />
+                <ScalarProperty Name="QUANTITY" ColumnName="QUANTITY" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAKEs">
+            <EntityTypeMapping TypeName="CakeShopDBModel.CAKE">
+              <MappingFragment StoreEntitySet="CAKE">
+                <ScalarProperty Name="CAKE_ID" ColumnName="CAKE_ID" />
+                <ScalarProperty Name="CAKE_NAME" ColumnName="CAKE_NAME" />
+                <ScalarProperty Name="CAKE_DESCRIPTION" ColumnName="CAKE_DESCRIPTION" />
+                <ScalarProperty Name="CAKE_PRICE" ColumnName="CAKE_PRICE" />
+                <ScalarProperty Name="ADDED_DATE" ColumnName="ADDED_DATE" />
+                <ScalarProperty Name="IMAGE_LINK" ColumnName="IMAGE_LINK" />
+                <ScalarProperty Name="EXIST_STATUS" ColumnName="EXIST_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TYPEs">
+            <EntityTypeMapping TypeName="CakeShopDBModel.TYPE">
+              <MappingFragment StoreEntitySet="TYPE">
+                <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+                <ScalarProperty Name="TYPE_NAME" ColumnName="TYPE_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="TYPE_CAKE" TypeName="CakeShopDBModel.TYPE_CAKE" StoreEntitySet="TYPE_CAKE">
+            <EndProperty Name="CAKE">
+              <ScalarProperty Name="CAKE_ID" ColumnName="CAKE_ID" />
+            </EndProperty>
+            <EndProperty Name="TYPE">
+              <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

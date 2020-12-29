@@ -8,8 +8,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/icons/about.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/icons/orders.png")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("resources/icons/statistics.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cakeshopdb.context.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cakeshopdb.mdf")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cakeshopdb.tt")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("cakeshopdb_log.ldf")]
 
 
