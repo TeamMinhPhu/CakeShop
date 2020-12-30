@@ -95,7 +95,11 @@
                 </Grid>
                 <!-- end title bar-->
                 <Grid DockPanel.Dock="Top" Background="AliceBlue" Name="menuBar">
-                    <StackPanel Background="AliceBlue" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="73*"/>
+                        <ColumnDefinition Width="49*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Background="AliceBlue" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Grid.RowSpan="1" Margin="0,0,0,-0.4">
                         <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" Margin="5 0 10 0" Width="1"/>
                         <StackPanel Orientation="Vertical">
                             <StackPanel Orientation="Horizontal">
@@ -174,8 +178,8 @@
                     </StackPanel>
 
                 </Grid>
-                
-                
+
+
                 <Frame NavigationUIVisibility="Hidden" Name="content"></Frame>
             </DockPanel>
             <Border x:Name="Splash" Grid.RowSpan="4" Opacity=".2" Visibility="Collapsed" Background="Black">

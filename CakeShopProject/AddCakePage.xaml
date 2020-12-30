@@ -6,13 +6,85 @@
       xmlns:local="clr-namespace:CakeShopProject"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="620" d:DesignWidth="1100"
       Title="AddCakePage"
       Loaded="Page_Loaded">
 
     <Grid>
-        <Button Width="35" Height="35" Padding="0" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="3" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
-            <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
-        </Button>
+        <Grid>
+            <Grid Height="60" VerticalAlignment="Top">
+                <Button Width="35" Height="35" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="3" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
+                    <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
+                </Button>
+                <Label Content="Thêm bánh mới" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="35" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+            </Grid>
+            
+            <Grid MinHeight="450" Margin="0,60,0,110">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                
+                <StackPanel MinWidth="400" MinHeight="450" Grid.Column="0">
+                    <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Name="nameTextBox" MinWidth="300" MaxWidth="500" FontSize="24" Margin="20,20,0,30" materialDesign:HintAssist.Hint="Tên bánh" />
+                    <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Name="priceTextBox" MinWidth="300" MaxWidth="500" FontSize="24" Margin="20,0,0,30" materialDesign:HintAssist.Hint="Giá (VNĐ)" />
+                    <Grid MinWidth="300" MaxWidth="500" Margin="20,0,0,0">
+                        <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Name="typeTextBox" MinWidth="300" MaxWidth="500" FontSize="24" Margin="0,0,0,30" materialDesign:HintAssist.Hint="Loại bánh" />
+                        <ComboBox Foreground="{DynamicResource PrimaryHueMidBrush}" Name="tripStatusComboBox" Width="20" Height="32" FontSize="30" Margin="0,0,0,20" Padding="5,0,5,0" HorizontalAlignment="Right" BorderThickness="0">
+                            <ComboBox.ItemContainerStyle>
+                                <Style TargetType="ComboBoxItem" BasedOn="{StaticResource MaterialDesignComboBoxItemStyle}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True" >
+                                            <Setter Property="BorderThickness" Value="0" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                    <Style.Resources>
+                                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent"/>
+                                    </Style.Resources>
+                                </Style>
+                            </ComboBox.ItemContainerStyle>
+                            <ComboBoxItem>Lên kế hoạch</ComboBoxItem>
+                            <ComboBoxItem>Bắt đầu</ComboBoxItem>
+                            <ComboBoxItem>Đang đi</ComboBoxItem>
+                            <ComboBoxItem>Kết thúc</ComboBoxItem>
+                        </ComboBox>
+                    </Grid>
+
+                    <Border BorderThickness="1" VerticalAlignment="Bottom" Margin="20,10,0,0" BorderBrush="Black" MinHeight="200" MinWidth="300" MaxWidth="500">
+                        <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Name="tripDescriptionTextBox" Padding="5" AcceptsReturn="True" TextAlignment="Justify" TextWrapping="Wrap" Height="200" MinWidth="300" MaxWidth="500" FontSize="24" Background="Transparent" BorderThickness="0" materialDesign:HintAssist.Hint="Mô tả"  materialDesign:HintAssist.IsFloating="True"/>
+                    </Border>
+
+                </StackPanel>
+
+                
+
+                <StackPanel MinWidth="400" Grid.Column="1">
+                    
+                    <Border BorderThickness="1" BorderBrush="Black" Height="250" Width="400" Margin="20,20,20,0">
+                        <Grid Background="Transparent">
+                            <Image Height="248" Width="398" x:Name="cakeImage" Source="Resources/Icons/picture.png" Stretch="Fill" PreviewMouseLeftButtonDown="cakeImage_PreviewMouseLeftButtonDown" AllowDrop="True" Drop="cakeImage_Drop"/>
+                            <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" x:Name="cakeImageHint" Text="Chọn hình hoặc thư mục" FontSize="20" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,20"/>
+                        </Grid>
+                    </Border>
+
+                    
+                        <ListView Name="cakeImgListView" Margin="20,20,20,0" Width="470" MouseUp="cakeImgListView_PreviewMouseLeftButtonDown" Visibility="Hidden">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center"/>
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Image Width="200" Height="120" Stretch="Fill" Source="{Binding ImageLink}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+        <Button x:Name="addCakeBtn" Margin="0,30,0,30" Content="Thêm" Width="150" Height="50" Foreground="White" FontSize="25" Click="addCakeBtn_Click" materialDesign:ButtonAssist.CornerRadius="25" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>

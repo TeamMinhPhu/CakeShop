@@ -128,6 +128,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CakeShopDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="CAKE_IMAGES.cs">
+      <DependentUpon>CakeShopDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\MyFileManager.cs" />
     <Compile Include="InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
@@ -259,6 +263,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DependentUpon>CakeShopDB.mdf</DependentUpon>
     </Content>
+    <Resource Include="Resources\Icons\picture.png" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">

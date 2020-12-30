@@ -28,6 +28,7 @@ namespace CakeShopProject
         public virtual DbSet<BILL> BILLs { get; set; }
         public virtual DbSet<BILLDETAIL> BILLDETAILs { get; set; }
         public virtual DbSet<CAKE> CAKEs { get; set; }
+        public virtual DbSet<CAKE_IMAGES> CAKE_IMAGES { get; set; }
         public virtual DbSet<TYPE> TYPEs { get; set; }
     }
 }
