@@ -38,8 +38,16 @@
           <Property Name="CAKE_DESCRIPTION" Type="ntext" />
           <Property Name="CAKE_PRICE" Type="money" />
           <Property Name="ADDED_DATE" Type="datetime" />
-          <Property Name="IMAGE_LINK" Type="varchar" MaxLength="100" />
           <Property Name="EXIST_STATUS" Type="bit" />
+        </EntityType>
+        <EntityType Name="CAKE_IMAGES">
+          <Key>
+            <PropertyRef Name="CAKE_ID" />
+            <PropertyRef Name="IMAGE_ID" />
+          </Key>
+          <Property Name="CAKE_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="IMAGE_ID" Type="char" MaxLength="10" Nullable="false" />
+          <Property Name="IMAGE_LINK" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
@@ -80,6 +88,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CI_C">
+          <End Role="CAKE" Type="Self.CAKE" Multiplicity="1" />
+          <End Role="CAKE_IMAGES" Type="Self.CAKE_IMAGES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAKE">
+              <PropertyRef Name="CAKE_ID" />
+            </Principal>
+            <Dependent Role="CAKE_IMAGES">
+              <PropertyRef Name="CAKE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TC_C">
           <End Role="CAKE" Type="Self.CAKE" Multiplicity="1" />
           <End Role="TYPE_CAKE" Type="Self.TYPE_CAKE" Multiplicity="*" />
@@ -108,6 +128,7 @@
           <EntitySet Name="BILL" EntityType="Self.BILL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BILLDETAIL" EntityType="Self.BILLDETAIL" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CAKE" EntityType="Self.CAKE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CAKE_IMAGES" EntityType="Self.CAKE_IMAGES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TYPE_CAKE" EntityType="Self.TYPE_CAKE" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BD_B" Association="Self.FK_BD_B">
@@ -117,6 +138,10 @@
           <AssociationSet Name="FK_BD_C" Association="Self.FK_BD_C">
             <End Role="CAKE" EntitySet="CAKE" />
             <End Role="BILLDETAIL" EntitySet="BILLDETAIL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CI_C" Association="Self.FK_CI_C">
+            <End Role="CAKE" EntitySet="CAKE" />
+            <End Role="CAKE_IMAGES" EntitySet="CAKE_IMAGES" />
           </AssociationSet>
           <AssociationSet Name="FK_TC_C" Association="Self.FK_TC_C">
             <End Role="CAKE" EntitySet="CAKE" />
@@ -168,10 +193,20 @@
           <Property Name="CAKE_DESCRIPTION" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="CAKE_PRICE" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="ADDED_DATE" Type="DateTime" Precision="3" />
-          <Property Name="IMAGE_LINK" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="EXIST_STATUS" Type="Boolean" />
           <NavigationProperty Name="BILLDETAILs" Relationship="Self.FK_BD_C" FromRole="CAKE" ToRole="BILLDETAIL" />
+          <NavigationProperty Name="CAKE_IMAGES" Relationship="Self.FK_CI_C" FromRole="CAKE" ToRole="CAKE_IMAGES" />
           <NavigationProperty Name="TYPEs" Relationship="Self.TYPE_CAKE" FromRole="CAKE" ToRole="TYPE" />
+        </EntityType>
+        <EntityType Name="CAKE_IMAGES">
+          <Key>
+            <PropertyRef Name="CAKE_ID" />
+            <PropertyRef Name="IMAGE_ID" />
+          </Key>
+          <Property Name="CAKE_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IMAGE_ID" Type="String" MaxLength="10" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="IMAGE_LINK" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CAKE" Relationship="Self.FK_CI_C" FromRole="CAKE_IMAGES" ToRole="CAKE" />
         </EntityType>
         <EntityType Name="TYPE">
           <Key>
@@ -205,6 +240,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CI_C">
+          <End Role="CAKE" Type="Self.CAKE" Multiplicity="1" />
+          <End Role="CAKE_IMAGES" Type="Self.CAKE_IMAGES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CAKE">
+              <PropertyRef Name="CAKE_ID" />
+            </Principal>
+            <Dependent Role="CAKE_IMAGES">
+              <PropertyRef Name="CAKE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="TYPE_CAKE">
           <End Role="CAKE" Type="Self.CAKE" Multiplicity="*" />
           <End Role="TYPE" Type="Self.TYPE" Multiplicity="*" />
@@ -213,6 +260,7 @@
           <EntitySet Name="BILLs" EntityType="Self.BILL" />
           <EntitySet Name="BILLDETAILs" EntityType="Self.BILLDETAIL" />
           <EntitySet Name="CAKEs" EntityType="Self.CAKE" />
+          <EntitySet Name="CAKE_IMAGES" EntityType="Self.CAKE_IMAGES" />
           <EntitySet Name="TYPEs" EntityType="Self.TYPE" />
           <AssociationSet Name="FK_BD_B" Association="Self.FK_BD_B">
             <End Role="BILL" EntitySet="BILLs" />
@@ -221,6 +269,10 @@
           <AssociationSet Name="FK_BD_C" Association="Self.FK_BD_C">
             <End Role="CAKE" EntitySet="CAKEs" />
             <End Role="BILLDETAIL" EntitySet="BILLDETAILs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CI_C" Association="Self.FK_CI_C">
+            <End Role="CAKE" EntitySet="CAKEs" />
+            <End Role="CAKE_IMAGES" EntitySet="CAKE_IMAGES" />
           </AssociationSet>
           <AssociationSet Name="TYPE_CAKE" Association="Self.TYPE_CAKE">
             <End Role="CAKE" EntitySet="CAKEs" />
@@ -266,8 +318,16 @@
                 <ScalarProperty Name="CAKE_DESCRIPTION" ColumnName="CAKE_DESCRIPTION" />
                 <ScalarProperty Name="CAKE_PRICE" ColumnName="CAKE_PRICE" />
                 <ScalarProperty Name="ADDED_DATE" ColumnName="ADDED_DATE" />
-                <ScalarProperty Name="IMAGE_LINK" ColumnName="IMAGE_LINK" />
                 <ScalarProperty Name="EXIST_STATUS" ColumnName="EXIST_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CAKE_IMAGES">
+            <EntityTypeMapping TypeName="CakeShopDBModel.CAKE_IMAGES">
+              <MappingFragment StoreEntitySet="CAKE_IMAGES">
+                <ScalarProperty Name="CAKE_ID" ColumnName="CAKE_ID" />
+                <ScalarProperty Name="IMAGE_ID" ColumnName="IMAGE_ID" />
+                <ScalarProperty Name="IMAGE_LINK" ColumnName="IMAGE_LINK" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

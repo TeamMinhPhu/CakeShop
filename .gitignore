@@ -389,3 +389,6 @@ Version.cpp
 *.cache
 *.pdb
 *.lref
+.vs/CakeShopProject/v16/.suo
+*.pdb
+*.cache
