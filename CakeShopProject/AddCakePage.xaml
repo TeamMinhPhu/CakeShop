@@ -4,11 +4,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CakeShopProject"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="AddCakePage">
+      Title="AddCakePage"
+      Loaded="Page_Loaded">
 
     <Grid>
-        <TextBlock>Add Cake</TextBlock>
+        <Button Width="35" Height="35" Padding="0" Margin="10,5,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="3" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
+            <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
+        </Button>
     </Grid>
 </Page>

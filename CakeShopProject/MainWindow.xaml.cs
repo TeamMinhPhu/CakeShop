@@ -97,7 +97,10 @@ namespace CakeShopProject
 			config.AppSettings.Settings["Height"].Value = this.Height.ToString();
 			config.Save(ConfigurationSaveMode.Minimal);
 		}
-
+		private void ShowMenuHandler()
+		{
+			menuBar.Visibility = Visibility.Visible;
+		}
 
 		#region "Navigate"
 		private void infoButton_MouseUp(object sender, MouseButtonEventArgs e)
@@ -119,8 +122,10 @@ namespace CakeShopProject
 
 		private void addCakeButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			this.content.Navigate(new AddCakePage());
-
+			menuBar.Visibility = Visibility.Collapsed;
+			var newAddCakePage = new AddCakePage();
+			newAddCakePage.BackBtnClick += ShowMenuHandler;
+			this.content.Navigate(newAddCakePage);
 		}
 
 		private void statisticsButton_MouseUp(object sender, MouseButtonEventArgs e)

@@ -20,9 +20,24 @@ namespace CakeShopProject
 	/// </summary>
 	public partial class AddCakePage : Page
 	{
+		public delegate void ClosingHandler();
+		public event ClosingHandler BackBtnClick;
+
 		public AddCakePage()
 		{
 			InitializeComponent();
 		}
-	}
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+			BackBtnClick?.Invoke();
+			UpdateLayout();
+			this.NavigationService.GoBack();
+		}
+    }
 }
