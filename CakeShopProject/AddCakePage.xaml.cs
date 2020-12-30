@@ -32,9 +32,16 @@ namespace CakeShopProject
             public string ImageLink { get; set; }
         }
 
+        int mode;
         string _ImageLink = "";
         BindingList<CakeImage> myViewImgList;
+        BindingList<TYPE> myTypes;
+        CakeShopDBEntities db = new CakeShopDBEntities();
 
+        /// <summary>
+        /// main function
+        /// </summary>
+        /// ////////////////////////////////////////////////////////
         public AddCakePage()
 		{
 			InitializeComponent();
@@ -44,6 +51,27 @@ namespace CakeShopProject
         {
             myViewImgList = new BindingList<CakeImage>();
             cakeImgListView.ItemsSource = myViewImgList;
+
+            int quantity = db.TYPEs.Count();
+            if (quantity == 0)
+            {
+                var newType = new TYPE { TYPE_ID = "TYPE0", TYPE_NAME = "Khác" };
+                db.TYPEs.Add(newType);
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("Lỗi tạo loại bánh");
+                }
+            }
+
+            myTypes = new BindingList<TYPE>(db.TYPEs.OrderBy(c=>c.TYPE_NAME).ToList());
+            typeComboBox.ItemsSource = myTypes;
+
+            mode = 0;
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -215,13 +243,263 @@ namespace CakeShopProject
             }
         }
 
-        private void addCakeBtn_Click(object sender, RoutedEventArgs e)
+        private void typeComboBox_DropDownClosed(object sender, EventArgs e)
         {
-
+            var index = typeComboBox.SelectedIndex;
+            if (index >= 0)
+            {
+                typeTextBox.Text = myTypes[index].TYPE_NAME;
+                typeComboBox.SelectedIndex = -1;
+            }
         }
 
-        private void ListView_PreviewMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        private void addCakeBtn_Click(object sender, RoutedEventArgs e)
         {
+            //check name
+            if (nameTextBox.Text.Length <= 0)
+            {
+                MessageBox.Show("Chưa nhập tên bánh", "Cảnh báo");
+            }
+            else
+            {
+                //check price
+                if (priceTextBox.Text.Length > 0)
+                {
+                    //check price
+                    if (!long.TryParse(priceTextBox.Text, out long cakePrice))
+                    {
+                        MessageBox.Show("Số tiền nhập không phải là số hoặc vượt quá giới hạn", "Lỗi");
+                    }
+                    else
+                    {
+                        if (mode == 0)
+                        {
+                            //create ID
+                            var temp = db.CAKEs.Count();
+                            string myCakeId = $"CAKE{temp}";
+                            myCakeId = myCakeId.Replace(" ", "");
+                            //Create folder to save image
+                            var Folder = AppDomain.CurrentDomain.BaseDirectory;
+                            var savedFolderLink = $"Resources\\Images\\{myCakeId}";
+                            MyFileManager.CheckDictionary($"{Folder}{savedFolderLink}");
+
+                            SaveNewCake(myCakeId, cakePrice);
+
+                            SaveCakeImage(myCakeId, savedFolderLink);
+
+                            SaveType(myCakeId);
+
+                            BackBtnClick?.Invoke();
+                            UpdateLayout();
+                            this.NavigationService.GoBack();
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Chưa nhập số tiền", "Cảnh báo");
+                }
+            }
+        }
+
+        private void SaveNewCake(string myCakeId, long price)
+        {
+            var now = DateTime.UtcNow;
+            var newCake = new CAKE
+            {
+                CAKE_ID = myCakeId,
+                CAKE_NAME = nameTextBox.Text,
+                CAKE_PRICE = price,
+                CAKE_DESCRIPTION = cakeDescriptionTextBox.Text,
+                EXIST_STATUS = true,
+                ADDED_DATE = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second)
+
+            };
+
+            db.CAKEs.Add(newCake);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi thêm bánh");
+            }
+        }
+
+        private void SaveCakeImage(string myCakeId, string savedFolderLink)
+        {
+            var Folder = AppDomain.CurrentDomain.BaseDirectory;
+
+            //Main cake image link: Resources\\Images\\CAKE{}\\CAKE{}.jpg
+            List<string> imgLink = new List<string>();
+            List<string> imgCode = new List<string>();
+
+            var cakeImgLink = $"{savedFolderLink}\\{myCakeId}.jpg";
+            imgCode.Add(myCakeId);
+
+            //Save main cake Image
+            if (_ImageLink.Length > 0)
+            {
+                //Save main Image
+                var myFilePath = $"{Folder}{cakeImgLink}";
+
+                if (_ImageLink != myFilePath)
+                {
+                    try
+                    {
+                        //Check if existed image having same name then replace
+                        MyFileManager.CheckExistedFile(myFilePath);
+                        //Copy image to new folder
+                        System.IO.File.Copy(_ImageLink, myFilePath);
+                        imgLink.Add(cakeImgLink);
+                    }
+                    catch 
+                    {
+                        imgLink.Add("");
+                    }
+
+                }
+            }
+            else
+            {
+                imgLink.Add("");
+            }
+
+
+
+            //Save other images
+            if (myViewImgList.Count > 0)
+            {
+                int i = 0;
+                foreach (var item in myViewImgList)
+                {
+                    var newImg = $"{savedFolderLink}\\{myCakeId}_{i}.jpg";
+                    imgCode.Add($"{myCakeId}_{i}");
+
+                    //Save Image
+                    var myFilePath = $"{Folder}{newImg}";
+
+                    if (item.ImageLink != myFilePath)
+                    {
+                        try
+                        {
+                            //Check if existed image having same name then replace
+                            MyFileManager.CheckExistedFile(myFilePath);
+                            //Copy image to new folder
+                            System.IO.File.Copy(item.ImageLink, myFilePath);
+                            imgLink.Add(newImg);
+                        }
+                        catch
+                        {
+                            imgLink.Add("");
+                        }
+
+                    }
+                    i++;
+                }
+            }
+
+            for(int i = 0; i < imgLink.Count; i++)
+            {
+                var newCakeImg = new CAKE_IMAGES
+                {
+                    CAKE_ID = myCakeId,
+                    IMAGE_ID = imgCode[i],
+                    IMAGE_LINK = imgLink[i]
+                };
+
+                db.CAKE_IMAGES.Add(newCakeImg);
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi thêm hình");
+            }
+        }
+
+        private static readonly string[] VietNamChar = new string[]
+        {
+            "aAeEoOuUiIdDyY",
+            "áàạảãâấầậẩẫăắằặẳẵ",
+            "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+            "éèẹẻẽêếềệểễ",
+            "ÉÈẸẺẼÊẾỀỆỂỄ",
+            "óòọỏõôốồộổỗơớờợởỡ",
+            "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+            "úùụủũưứừựửữ",
+            "ÚÙỤỦŨƯỨỪỰỬỮ",
+            "íìịỉĩ",
+            "ÍÌỊỈĨ",
+            "đ",
+            "Đ",
+            "ýỳỵỷỹ",
+            "ÝỲỴỶỸ"
+        };
+        public static string RemoveSign(string str)
+        {
+            str = str.Normalize(NormalizationForm.FormC);
+            //replace unicode char      
+            for (int i = 1; i < VietNamChar.Length; i++)
+            {
+                for (int j = 0; j < VietNamChar[i].Length; j++)
+                {
+                    str = str.Replace(VietNamChar[i][j], VietNamChar[0][i - 1]);
+                }
+            }
+            return str;
+        }
+
+        private void SaveType(string myCakeId)
+        {
+            var types = db.TYPEs.ToList();
+
+            TYPE type = null;
+            foreach(var item in types)
+            {
+                if(RemoveSign(item.TYPE_NAME).ToLower() == RemoveSign(typeTextBox.Text).ToLower())
+                {
+                    type = item;
+                    break;
+                }
+            }           
+            
+            
+            var cake = db.CAKEs.Where(c => c.CAKE_ID == myCakeId).FirstOrDefault();
+
+            if (type == null)
+            {
+                //create new type
+                var quantity = db.TYPEs.Count();
+                var typecode = $"TYPE{quantity}";
+                typecode = typecode.Replace(" ", "");
+                var newType = new TYPE { TYPE_ID = typecode, TYPE_NAME = typeTextBox.Text };
+                newType.CAKEs.Add(cake);
+                cake.TYPEs.Add(newType);
+            }
+            else
+            {
+                cake.TYPEs.Add(type);
+                type.CAKEs.Add(cake);
+            }
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch
+            {
+                MessageBox.Show("Lỗi thêm loại bánh");
+            }
 
         }
 
