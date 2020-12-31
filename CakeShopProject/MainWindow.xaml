@@ -46,7 +46,7 @@
             <DockPanel>
                 <!-- Title bar -->
                 <Grid Name="TitleBar" Height="30" VerticalAlignment="Top" DockPanel.Dock="Top" Background="{DynamicResource PrimaryHueDarkBrush}" Margin="0 -2 0 0">
-                    <TextBlock Text="We Split" VerticalAlignment="Center" FontWeight="Bold" Foreground="#fff" Margin="10 0 0 0"/>
+                    <TextBlock Text="Cake Shop" VerticalAlignment="Center" FontWeight="Bold" Foreground="#fff" Margin="10 0 0 0"/>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button x:Name="minimizeProgramButton"
                     Panel.ZIndex="10"
@@ -164,10 +164,17 @@
                                     <TextBlock HorizontalAlignment="Center">Danh sách</TextBlock>
                                 </StackPanel>
                                 <StackPanel Width="50" HorizontalAlignment="Left" Margin="5 10 5 0">
-                                    <ListBoxItem Padding="0" Cursor="Hand" MouseUp="addReceiptButton_MouseUp">
-                                        <materialDesign:PackIcon Width="50" Height="50" Kind="PlaylistAdd" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
-                                        </materialDesign:PackIcon>
-                                    </ListBoxItem>
+                                    <Grid>
+                                        <Grid x:Name="notificationGrid" Height="20" Width="20" HorizontalAlignment="Right" VerticalAlignment="Top" Visibility="Collapsed">
+                                            <Ellipse Height="20" Width="20" Fill="Red"/>
+                                            <TextBlock Name="notificationTextBlock" Text="0" Foreground="White" FontSize="13" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Grid>
+                                        
+                                        <ListBoxItem Padding="0" Cursor="Hand" MouseUp="addReceiptButton_MouseUp">
+                                            <materialDesign:PackIcon Width="50" Height="50" Kind="PlaylistAdd" Background="Transparent" Foreground="{DynamicResource PrimaryHueDarkBrush}">
+                                            </materialDesign:PackIcon>
+                                        </ListBoxItem>
+                                    </Grid>
                                     <Separator Margin="0 1"></Separator>
                                     <TextBlock HorizontalAlignment="Center">Tạo mới</TextBlock>
                                 </StackPanel>

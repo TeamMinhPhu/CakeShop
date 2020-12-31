@@ -7,6 +7,7 @@
       xmlns:local="clr-namespace:CakeShopProject"
       mc:Ignorable="d" 
       d:DesignHeight="620" d:DesignWidth="1100"
+      Loaded="Page_Loaded"
       Title="AddReceiptPage">
 
     <Grid>
@@ -53,18 +54,22 @@
                     <DataGrid x:Name="cakeDataList" IsReadOnly="True" AutoGenerateColumns="False" Padding="0" Margin="0" MaxHeight="290" Width="500" ColumnWidth="*" Background="Transparent">
                         
                         <DataGrid.Columns>
-                            <DataGridTextColumn Binding="{Binding MemberName}" Width="3*" Header="Tên bánh"></DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding MemberId}" Width="1.5*" Header="Giá (VNĐ)"></DataGridTextColumn>
-                            <DataGridTextColumn Binding="{Binding Phone}" Width="*" Header="Số lượng"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding CakeName}" Width="3*" Header="Tên bánh"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Cost}" Width="1.5*" Header="Giá (VNĐ)"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Quantity}" Width="*" Header="Số lượng"></DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
 
                     <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Text="Tổng: 0 VNĐ" HorizontalAlignment="Right" Name="totalTextBlock" Width="220" FontSize="18" Margin="30,20,20,20"/>
-
+                    <CheckBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Content="Đã giao" HorizontalAlignment="Right" Name="shippedCheckBox" Width="220" FontSize="18" Margin="30,0,20,20"/>
                 </StackPanel>
             </Grid>
 
         </Grid>
-        <Button x:Name="doneBtn" Margin="0,30,0,40" Content="Hoàn thành" Width="190" Height="50" Foreground="White" FontSize="25" Click="doneBtn_Click" materialDesign:ButtonAssist.CornerRadius="25" VerticalAlignment="Bottom"/>
+        <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="0,30,0,40" HorizontalAlignment="Center">
+            <Button x:Name="deleteBtn" Content="Hủy đơn" Margin="20,0,20,0" Width="190" Height="50" Foreground="White" FontSize="25" Click="deleteBtn_Click" materialDesign:ButtonAssist.CornerRadius="25"/>
+            <Button x:Name="doneBtn" Content="Hoàn thành" Margin="20,0,20,0" Width="190" Height="50" Foreground="White" FontSize="25" Click="doneBtn_Click" materialDesign:ButtonAssist.CornerRadius="25"/>
+        </StackPanel>
+        
     </Grid>
 </Page>
