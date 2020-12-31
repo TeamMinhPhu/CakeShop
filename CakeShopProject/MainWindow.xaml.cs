@@ -140,7 +140,7 @@ namespace CakeShopProject
 
 		private void addReceiptButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			this.content.Navigate(new AddReceiptPage());
+			//this.content.Navigate(new AddReceiptPage());
 		}
 		#endregion
 

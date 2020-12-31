@@ -15,6 +15,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Win32;
 
+using MaterialDesignThemes;
+using MaterialDesignColors;
 using WeSplitProject.Classes;
 
 namespace CakeShopProject
@@ -445,6 +447,7 @@ namespace CakeShopProject
             "ýỳỵỷỹ",
             "ÝỲỴỶỸ"
         };
+
         public static string RemoveSign(string str)
         {
             str = str.Normalize(NormalizationForm.FormC);
@@ -502,6 +505,7 @@ namespace CakeShopProject
             }
 
         }
+
 
     }
 }

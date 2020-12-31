@@ -20,9 +20,97 @@ namespace CakeShopProject
 	/// </summary>
 	public partial class AddReceiptPage : Page
 	{
-		public AddReceiptPage()
+		List<CAKE> myCakes;
+		string myBillId;
+		int mode;
+		long prepaidMoney = 0;
+		long totalMoney = 0;
+
+		public AddReceiptPage(List<CAKE> tempCake)
 		{
 			InitializeComponent();
+			myCakes = tempCake;
+			mode = 0;
 		}
-	}
+
+		public AddReceiptPage(string tempBillId)
+		{
+			InitializeComponent();
+			myBillId = tempBillId;
+			mode = 1;
+		}
+
+        private void payOnlineRadioBtn_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+			if(payOnlineRadioBtn.IsChecked == true)
+            {
+				prepaidTextBox.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void payOfflineRadioBtn_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+			if (payOnlineRadioBtn.IsChecked == true)
+			{
+				prepaidTextBox.Visibility = Visibility.Collapsed;
+				resultTextBlock.Visibility = Visibility.Collapsed;
+				prepaidTextBox.Text = "";
+				prepaidMoney = 0;
+			}
+		}
+
+        private void prepaidTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+			if (prepaidTextBox.Text.Length > 0)
+			{
+				if (!long.TryParse(prepaidTextBox.Text, out long money))
+				{
+					resultTextBlock.Visibility = Visibility.Collapsed;
+					MessageBox.Show("Số tiền nhập không phải là số hoặc vượt quá giới hạn", "Lỗi");
+				}
+				else
+				{
+                    if (money < 0)
+                    {
+						prepaidMoney = 0;
+						resultTextBlock.Visibility = Visibility.Collapsed;
+						MessageBox.Show("Số tiền nhập là số âm", "Lỗi");
+					}
+                    else
+                    {
+						long temp = totalMoney - money;
+                        if (temp < 0)
+                        {
+							prepaidMoney = 0;
+							resultTextBlock.Visibility = Visibility.Collapsed;
+							MessageBox.Show("Số tiền nhập vượt quá số tiền cần trả", "Lỗi");
+						}
+                        else
+                        {
+							prepaidMoney = money;
+							resultTextBlock.Visibility = Visibility.Visible;
+							resultTextBlock.Text = $"Số tiền còn lại: {temp} VNĐ";
+
+						}
+                    }
+					
+				}
+			}
+            else
+            {
+				prepaidMoney = 0;
+				resultTextBlock.Visibility = Visibility.Collapsed;
+			}
+		}
+
+        private void backButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void doneBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+    }
 }

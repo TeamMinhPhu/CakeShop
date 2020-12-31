@@ -3,12 +3,68 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       xmlns:local="clr-namespace:CakeShopProject"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="620" d:DesignWidth="1100"
       Title="AddReceiptPage">
 
     <Grid>
-        <TextBlock>Add Receipt Page</TextBlock>
+        <Grid>
+            <Grid Height="60" VerticalAlignment="Top">
+                <Button Width="35" Height="35" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="3" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
+                    <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
+                </Button>
+                <Label Content="Đơn hàng" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="35" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+            </Grid>
+            <Grid MinHeight="450" Margin="0,60,0,110">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel MinWidth="400" MinHeight="450" Grid.Column="0">
+                    <Label Content="Thông tin khách hàng" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="10,0,10,0" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+                    <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Name="nameTextBox" HorizontalContentAlignment="Center" Width="300" FontSize="18" Margin="20" materialDesign:HintAssist.Hint="Tên khách hàng" />
+                    <Grid Width="550" HorizontalAlignment="Center">
+                        <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" HorizontalAlignment="Left" Name="phoneTextBox" Width="220" FontSize="18" Margin="30,0,0,20" materialDesign:HintAssist.Hint="Số điện thoại"/>
+                        <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" HorizontalAlignment="Right" Name="emailTextBox" Width="230" FontSize="18" Margin="290,0,20,20" materialDesign:HintAssist.Hint="Email" />
+                    </Grid>
+                    <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Name="addressTextBox" MinWidth="300" MaxWidth="500" FontSize="18" Margin="20,0,10,20" materialDesign:HintAssist.Hint="Địa chỉ" />
+                    <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Name="noteTextBox" MinWidth="300" MaxWidth="500" FontSize="18" Margin="20,0,10,20" materialDesign:HintAssist.Hint="Ghi chú" />
+
+                    <Label Content="Phương thức thanh toán" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="10" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+                    <Grid>
+                        <RadioButton GroupName="payMethod" Name="payOnlineRadioBtn" Foreground="{DynamicResource PrimaryHueMidBrush}" HorizontalAlignment="Left" FontSize="18" Margin="50,0,0,20" Content="Thanh toán online" MouseUp="payOnlineRadioBtn_MouseUp"></RadioButton>
+                        <RadioButton GroupName="payMethod" Name="payOfflineRadioBtn" Foreground="{DynamicResource PrimaryHueMidBrush}" HorizontalAlignment="Right" FontSize="18" Margin="250,0,50,20" Content="Thanh toán trực tiếp" MouseUp="payOfflineRadioBtn_MouseUp"></RadioButton>
+                    </Grid>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" HorizontalAlignment="Left" Name="prepaidTextBox" Width="220" FontSize="18" Margin="30,0,0,20" materialDesign:HintAssist.Hint="Trả trước (VNĐ)" LostFocus="prepaidTextBox_LostFocus" Visibility="Collapsed"/>
+                        <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Text="Số tiền còn lại: " HorizontalAlignment="Left" Name="resultTextBlock" Width="220" FontSize="18" Margin="30,10,0,20" Visibility="Collapsed"/>
+                    </StackPanel>
+                    
+                </StackPanel>
+
+
+
+                <StackPanel MinWidth="400" Grid.Column="1">
+                    <Label Content="Danh sách bánh" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="10,0,10,20" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+
+                    <DataGrid x:Name="cakeDataList" IsReadOnly="True" AutoGenerateColumns="False" Padding="0" Margin="0" MaxHeight="290" Width="500" ColumnWidth="*" Background="Transparent">
+                        
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Binding="{Binding MemberName}" Width="3*" Header="Tên bánh"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding MemberId}" Width="1.5*" Header="Giá (VNĐ)"></DataGridTextColumn>
+                            <DataGridTextColumn Binding="{Binding Phone}" Width="*" Header="Số lượng"></DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Text="Tổng: 0 VNĐ" HorizontalAlignment="Right" Name="totalTextBlock" Width="220" FontSize="18" Margin="30,20,20,20"/>
+
+                </StackPanel>
+            </Grid>
+
+        </Grid>
+        <Button x:Name="doneBtn" Margin="0,30,0,40" Content="Hoàn thành" Width="190" Height="50" Foreground="White" FontSize="25" Click="doneBtn_Click" materialDesign:ButtonAssist.CornerRadius="25" VerticalAlignment="Bottom"/>
     </Grid>
 </Page>
