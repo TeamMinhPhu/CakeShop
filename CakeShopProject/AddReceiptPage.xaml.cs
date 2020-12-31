@@ -21,6 +21,10 @@ namespace CakeShopProject
 	/// </summary>
 	public partial class AddReceiptPage : Page
 	{
+		public delegate void ClosingHandler();
+		public event ClosingHandler BackBtnClick;
+		public event ClosingHandler DoneBtnClick;
+
 		class CakeBillView
         {
 			public string CakeName { get; set; }
@@ -29,11 +33,11 @@ namespace CakeShopProject
 		}
 
 		BindingList<CakeBillView> myCakeView;
-		List<BILLDETAIL> myBillDetail;
-		BILL myBill;
+		public List<BILLDETAIL> myBillDetail { get; set; }
+		public BILL myBill { get; set; }
+
 		string myBillId;
 		int mode;
-		long prepaidMoney = 0;
 		long totalMoney = 0;
 		CakeShopDBEntities db = new CakeShopDBEntities();
 
@@ -189,17 +193,210 @@ namespace CakeShopProject
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
+			BackBtnClick?.Invoke();
+			UpdateLayout();
+			this.NavigationService.GoBack();
+		}
 
         private void doneBtn_Click(object sender, RoutedEventArgs e)
         {
+			///check name
+			if(nameTextBox.Text.Length > 0)
+            {
+				long phone = 0;
+				////check phone number
+				if (phoneTextBox.Text.Length > 0)
+				{
+					if (phoneTextBox.Text.Length > 10)
+					{
+						MessageBox.Show("Số điện thoại vượt quá 10 số", "Lỗi");
+						return;
+					}
+					else
+					{
+						if (long.TryParse(phoneTextBox.Text, out phone))
+						{
+							if (phone < 0 || phone > 9999999999)
+							{
+								MessageBox.Show("Số điện thoại chứa kí tự không hợp lệ", "Lỗi");
+								return;
+							}
+						}
+						else
+						{
+							MessageBox.Show("Số điện thoại chứa kí tự không hợp lệ", "Lỗi");
+							return;
+						}
+					}
 
-        }
+					//////// check pay method
+					///
+					if(payOnlineRadioBtn.IsChecked == false && payOfflineRadioBtn.IsChecked == false)
+                    {
+						MessageBox.Show("Chưa chọn phương thức thanh toán", "Cảnh báo");
+					}
+                    else
+                    {
+						/////save bill
+						///
+						if (mode == 0)
+                        {
+							int status = 0;
+							if(shippedCheckBox.IsChecked == true)
+                            {
+								status = 2;
+                            }
+                            else
+                            {
+								status = 1;
+                            }
 
-        private void deleteBtn_Click(object sender, RoutedEventArgs e)
+							SaveBill(status);
+							SaveBillDetail();
+                        }
+						else if (mode == 1)
+                        {
+							int status = 0;
+							if (shippedCheckBox.IsChecked == true)
+							{
+								status = 2;
+							}
+							else
+							{
+								status = 1;
+							}
+
+							SaveBill(status);
+						}
+					}
+				}
+                else
+                {
+					MessageBox.Show("Chưa nhập số điện thoại", "Cảnh báo");
+				}
+			}
+            else
+            {
+				MessageBox.Show("Chưa nhập tên khách hàng", "Cảnh báo");
+			}
+
+			DoneBtnClick?.Invoke();
+			UpdateLayout();
+			this.NavigationService.GoBack();
+		}
+
+		private void SaveBill(int status)
         {
 
-        }
+			BILL newBill = new BILL();
+
+
+			if (status != 0)
+            {
+				int billType = 0;
+
+				if (payOnlineRadioBtn.IsChecked == true)
+				{
+					billType = 0;
+				}
+				else
+				{
+					billType = 1;
+				}
+				
+
+				if (mode == 0)
+				{
+					newBill = new BILL
+					{
+						BILL_ID = myBill.BILL_ID,
+						CUSTOMER_NAME = nameTextBox.Text,
+						PHONE = phoneTextBox.Text,
+						EMAIL = emailTextBox.Text,
+						ADDRESS = addressTextBox.Text,
+						NOTE = noteTextBox.Text,
+						BILLTYPE = billType,
+						PREPAID_MONEY = myBill.PREPAID_MONEY,
+						STATUS = status
+
+					};
+				}
+				else if (mode == 1)
+				{
+					newBill = db.BILLs.Where(c => c.BILL_ID == myBillId).FirstOrDefault();
+
+					newBill.CUSTOMER_NAME = nameTextBox.Text;
+					newBill.PHONE = phoneTextBox.Text;
+					newBill.EMAIL = emailTextBox.Text;
+					newBill.ADDRESS = addressTextBox.Text;
+					newBill.NOTE = noteTextBox.Text;
+					newBill.BILLTYPE = billType;
+					newBill.PREPAID_MONEY = myBill.PREPAID_MONEY;
+					newBill.STATUS = status;
+				}
+
+				var now = DateTime.UtcNow;
+				if (status != 2)
+				{
+					newBill.COMPLETED_DATE = null;
+				}
+				else
+				{
+					newBill.COMPLETED_DATE = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+				}
+			}
+            else
+            {
+				if(mode == 1)
+                {
+					newBill = db.BILLs.Where(c => c.BILL_ID == myBillId).FirstOrDefault();
+
+					newBill.STATUS = status;
+				}
+			}
+
+			///////////////////////
+			if(mode == 0)
+            {
+				db.BILLs.Add(newBill);
+			}
+
+			try
+			{
+				db.SaveChanges();
+			}
+			catch
+			{
+				MessageBox.Show("Lỗi thêm đơn hàng");
+			}
+		}
+
+		private void SaveBillDetail()
+		{
+			foreach(var bill in myBillDetail)
+            {
+				db.BILLDETAILs.Add(bill);
+            }
+
+			try
+			{
+				db.SaveChanges();
+			}
+			catch
+			{
+				MessageBox.Show("Lỗi thêm chi tiết đơn hàng");
+			}
+		}
+
+		private void deleteBtn_Click(object sender, RoutedEventArgs e)
+        {
+			if (mode == 1) 
+            {
+				SaveBill(0);
+            }
+			DoneBtnClick?.Invoke();
+			UpdateLayout();
+			this.NavigationService.GoBack();
+		}
     }
 }

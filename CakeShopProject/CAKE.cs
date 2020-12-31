@@ -19,10 +19,10 @@ namespace CakeShopProject
         {
             this.BILLDETAILs = new HashSet<BILLDETAIL>();
             this.CAKE_IMAGES = new HashSet<CAKE_IMAGES>();
-            this.TYPEs = new HashSet<TYPE>();
         }
     
         public string CAKE_ID { get; set; }
+        public string TYPE_ID { get; set; }
         public string CAKE_NAME { get; set; }
         public string CAKE_DESCRIPTION { get; set; }
         public Nullable<decimal> CAKE_PRICE { get; set; }
@@ -31,9 +31,8 @@ namespace CakeShopProject
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BILLDETAIL> BILLDETAILs { get; set; }
+        public virtual TYPE TYPE { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CAKE_IMAGES> CAKE_IMAGES { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TYPE> TYPEs { get; set; }
     }
 }

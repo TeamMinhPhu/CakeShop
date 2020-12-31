@@ -35,6 +35,8 @@ namespace CakeShopProject
         }
 
         int mode;
+        CAKE myCake;
+        string myCakeId = "";
         string _ImageLink = "";
         BindingList<CakeImage> myViewImgList;
         BindingList<TYPE> myTypes;
@@ -47,7 +49,15 @@ namespace CakeShopProject
         public AddCakePage()
 		{
 			InitializeComponent();
+            mode = 0;
 		}
+
+        public AddCakePage(string tempId)
+        {
+            InitializeComponent();
+            myCakeId = tempId;
+            mode = 1;
+        }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
@@ -73,7 +83,50 @@ namespace CakeShopProject
             myTypes = new BindingList<TYPE>(db.TYPEs.OrderBy(c=>c.TYPE_NAME).ToList());
             typeComboBox.ItemsSource = myTypes;
 
-            mode = 0;
+            //edit mode
+            if (mode == 1) 
+            {
+                myCake = db.CAKEs.Where(c => c.CAKE_ID == myCakeId).FirstOrDefault();
+
+                nameTextBox.Text = myCake.CAKE_NAME;
+                priceTextBox.Text = $"{myCake.CAKE_PRICE}";
+
+                var type = db.TYPEs.Where(c => c.TYPE_ID == myCake.TYPE_ID).FirstOrDefault();
+
+                typeTextBox.Text = type.TYPE_NAME;
+                cakeDescriptionTextBox.Text = myCake.CAKE_DESCRIPTION;
+
+                ///load img
+                var Folder = AppDomain.CurrentDomain.BaseDirectory;
+
+                var ImgList = db.CAKE_IMAGES.Where(c => c.CAKE_ID == myCakeId).ToList();
+                var mainImg = ImgList.Where(c => c.IMAGE_ID == myCakeId).FirstOrDefault();
+                if (mainImg != null)
+                {
+                    ImgList.Remove(mainImg);
+
+                    _ImageLink = mainImg.IMAGE_LINK;
+                    ///display image
+                    if (_ImageLink.Length > 0)
+                    {
+                        _ImageLink = Folder + _ImageLink;
+                        var Bitmap = new BitmapImage(new Uri(_ImageLink, UriKind.Absolute));
+                        cakeImage.Source = Bitmap;
+                        cakeImageHint.Visibility = Visibility.Hidden;
+                    }
+
+                    if (ImgList.Count > 0)
+                    {
+                        foreach(var img in ImgList)
+                        {
+                            var link = Folder + img.IMAGE_LINK;
+                            myViewImgList.Add(new CakeImage { ImageLink = link });
+                        }
+                        cakeImgListView.ItemsSource = myViewImgList;
+                    }
+                }
+                
+            }
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
@@ -278,27 +331,40 @@ namespace CakeShopProject
                         {
                             //create ID
                             var temp = db.CAKEs.Count();
-                            string myCakeId = $"CAKE{temp}";
-                            myCakeId = myCakeId.Replace(" ", "");
+                            string newCakeId = $"CAKE{temp}";
+                            newCakeId = newCakeId.Replace(" ", "");
+                            //Create folder to save image
+                            var Folder = AppDomain.CurrentDomain.BaseDirectory;
+                            var savedFolderLink = $"Resources\\Images\\{newCakeId}";
+                            MyFileManager.CheckDictionary($"{Folder}{savedFolderLink}");
+
+                            SaveNewCake(newCakeId, cakePrice);
+
+                            SaveCakeImage(newCakeId, savedFolderLink);
+
+                            SaveType(newCakeId);
+                        }
+                        else
+                        {
                             //Create folder to save image
                             var Folder = AppDomain.CurrentDomain.BaseDirectory;
                             var savedFolderLink = $"Resources\\Images\\{myCakeId}";
                             MyFileManager.CheckDictionary($"{Folder}{savedFolderLink}");
+
+                            //remove old data
+                            db.CAKE_IMAGES.RemoveRange(db.CAKE_IMAGES.Where(c => c.CAKE_ID == myCakeId).ToList());
+                            db.CAKEs.Remove(myCake);
 
                             SaveNewCake(myCakeId, cakePrice);
 
                             SaveCakeImage(myCakeId, savedFolderLink);
 
                             SaveType(myCakeId);
-
-                            BackBtnClick?.Invoke();
-                            UpdateLayout();
-                            this.NavigationService.GoBack();
                         }
-                        else
-                        {
 
-                        }
+                        BackBtnClick?.Invoke();
+                        UpdateLayout();
+                        this.NavigationService.GoBack();
                     }
                 }
                 else
@@ -336,6 +402,13 @@ namespace CakeShopProject
 
         private void SaveCakeImage(string myCakeId, string savedFolderLink)
         {
+            if(_ImageLink.Length == 0)
+            {
+                if (myViewImgList.Count > 0)
+                {
+                    _ImageLink = myViewImgList[0].ImageLink;
+                }
+            }
             var Folder = AppDomain.CurrentDomain.BaseDirectory;
 
             //Main cake image link: Resources\\Images\\CAKE{}\\CAKE{}.jpg
@@ -465,35 +538,45 @@ namespace CakeShopProject
         private void SaveType(string myCakeId)
         {
             var types = db.TYPEs.ToList();
-
-            TYPE type = null;
-            foreach(var item in types)
-            {
-                if(RemoveSign(item.TYPE_NAME).ToLower() == RemoveSign(typeTextBox.Text).ToLower())
-                {
-                    type = item;
-                    break;
-                }
-            }           
-            
-            
             var cake = db.CAKEs.Where(c => c.CAKE_ID == myCakeId).FirstOrDefault();
 
-            if (type == null)
+            if (typeTextBox.Text.Length > 0)
             {
-                //create new type
-                var quantity = db.TYPEs.Count();
-                var typecode = $"TYPE{quantity}";
-                typecode = typecode.Replace(" ", "");
-                var newType = new TYPE { TYPE_ID = typecode, TYPE_NAME = typeTextBox.Text };
-                newType.CAKEs.Add(cake);
-                cake.TYPEs.Add(newType);
+                TYPE type = null;
+                foreach (var item in types)
+                {
+                    if (RemoveSign(item.TYPE_NAME).ToLower() == RemoveSign(typeTextBox.Text).ToLower())
+                    {
+                        type = item;
+                        break;
+                    }
+                }
+
+                //new type
+                if (type == null)
+                {
+                    //create new type
+                    var quantity = db.TYPEs.Count();
+                    var typecode = $"TYPE{quantity}";
+                    typecode = typecode.Replace(" ", "");
+
+                    var newType = new TYPE { TYPE_ID = typecode, TYPE_NAME = typeTextBox.Text };
+
+                    cake.TYPE_ID = newType.TYPE_ID;
+
+                    db.TYPEs.Add(newType);
+                }
+                else // old type
+                {
+                    cake.TYPE_ID = type.TYPE_ID;
+                }
             }
             else
             {
-                cake.TYPEs.Add(type);
-                type.CAKEs.Add(cake);
+                var type0 = "TYPE0";
+                cake.TYPE_ID = type0;
             }
+            
 
             try
             {

@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="849106cc11964896aa656fbb5c32a6ca" Name="Diagram1">
-        <EntityTypeShape EntityType="CakeShopDBModel.BILL" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="CakeShopDBModel.BILLDETAIL" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="CakeShopDBModel.CAKE" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="CakeShopDBModel.CAKE_IMAGES" Width="1.5" PointX="3" PointY="7" IsExpanded="true" />
-        <EntityTypeShape EntityType="CakeShopDBModel.TYPE" Width="1.5" PointX="3" PointY="9.5" IsExpanded="true" />
+      <Diagram DiagramId="510d14d9f4e3413e918748d8cfbd91f6" Name="Diagram1">
+        <EntityTypeShape EntityType="CakeShopDBModel.BILL" Width="1.5" PointX="3" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeShopDBModel.BILLDETAIL" Width="1.5" PointX="5.25" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeShopDBModel.CAKE" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeShopDBModel.CAKE_IMAGES" Width="1.5" PointX="5.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CakeShopDBModel.TYPE" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
         <AssociationConnector Association="CakeShopDBModel.FK_BD_B" ManuallyRouted="false" />
         <AssociationConnector Association="CakeShopDBModel.FK_BD_C" ManuallyRouted="false" />
+        <AssociationConnector Association="CakeShopDBModel.FK_C_T" ManuallyRouted="false" />
         <AssociationConnector Association="CakeShopDBModel.FK_CI_C" ManuallyRouted="false" />
-        <AssociationConnector Association="CakeShopDBModel.TYPE_CAKE" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
