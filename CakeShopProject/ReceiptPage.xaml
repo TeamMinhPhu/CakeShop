@@ -6,10 +6,22 @@
       xmlns:local="clr-namespace:CakeShopProject"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="ReceiptPage">
+      Title="ReceiptPage"
+      Loaded="Page_Loaded">
 
     <Grid>
-        <TextBlock FontSize="28">Receipt</TextBlock>
-        <Button Click="addReceipt_Click">Add Receipt</Button>
+        <DataGrid x:Name="receipt" IsReadOnly="True" AutoGenerateColumns="False" Padding="0" Margin="20" MaxHeight="200" ColumnWidth="*" Background="Transparent">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Name}" MinWidth="200" Header="Họ và tên"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Phone}" Header="Số điện thoại"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Email}" Header="Email"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Address}" Header="Địa chỉ"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Note}" Header="Ghi chú"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Payment}" Header="Tổng tiền"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding PaymentType}" Header="Kiểu thanh toán"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Status}" Header="Trạng thái"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        
     </Grid>
 </Page>

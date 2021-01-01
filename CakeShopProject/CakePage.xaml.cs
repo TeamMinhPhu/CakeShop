@@ -37,7 +37,7 @@ namespace CakeShopProject
 		CakeShopDBEntities db = new CakeShopDBEntities();
 		private System.Timers.Timer _timer = new System.Timers.Timer(300); //time delayed to UpdatePage after resizing window
 
-		BindingList<ViewModel> viewModels = new BindingList<ViewModel>();
+		BindingList<CakeViewModel> viewModels = new BindingList<CakeViewModel>();
 
 		public CakePage()
 		{
@@ -250,9 +250,9 @@ namespace CakeShopProject
 			}
 		}
 
-		private BindingList<ViewModel> GetViewModel()
+		private BindingList<CakeViewModel> GetViewModel()
 		{
-			BindingList<ViewModel> result = new BindingList<ViewModel>();
+			BindingList<CakeViewModel> result = new BindingList<CakeViewModel>();
 
 			var query = GetSearchedData();
 			_total_items = query.Count;
@@ -261,7 +261,7 @@ namespace CakeShopProject
 
 			foreach (var viewData in query)
 			{
-				ViewModel viewModel = new ViewModel();
+				CakeViewModel viewModel = new CakeViewModel();
 				viewModel.ID = viewData.CAKE_ID;
 				viewModel.Name = viewData.CAKE_NAME;
 
