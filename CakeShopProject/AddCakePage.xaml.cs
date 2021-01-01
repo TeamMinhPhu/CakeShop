@@ -17,7 +17,7 @@ using Microsoft.Win32;
 
 using MaterialDesignThemes;
 using MaterialDesignColors;
-using WeSplitProject.Classes;
+using CakeShopProject.Classes;
 
 namespace CakeShopProject
 {

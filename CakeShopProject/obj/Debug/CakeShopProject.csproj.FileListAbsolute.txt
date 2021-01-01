@@ -376,3 +376,4 @@ D:\Minh\This Week\Window\Project3\version 1.6\CakeShopProject\obj\Debug\CakeShop
 D:\Minh\This Week\Window\Project3\version 1.6\CakeShopProject\obj\Debug\CakeShopProject.csproj.CopyComplete
 D:\Minh\This Week\Window\Project3\version 1.6\CakeShopProject\obj\Debug\CakeShopProject.exe
 D:\Minh\This Week\Window\Project3\version 1.6\CakeShopProject\obj\Debug\CakeShopProject.pdb
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Images\sora.jpg
