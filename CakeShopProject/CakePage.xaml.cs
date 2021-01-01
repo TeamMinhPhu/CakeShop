@@ -278,6 +278,7 @@ namespace CakeShopProject
 			return result;
 		}
 
+		#region "get searched model"
 		private List<CAKE> GetSearchedData()
 		{
 			List<CAKE> result = new List<CAKE>();
@@ -285,11 +286,51 @@ namespace CakeShopProject
 			db = new CakeShopDBEntities();
 
 			///search
-			result = db.CAKEs.Where(c => c.CAKE_NAME.Contains(_search)).ToList();
+			_search = RemoveSign(_search);
+			result = db.CAKEs.Where(c => RemoveSign(c.CAKE_NAME).Contains(_search)).ToList();
 			return result;
 		}
 
-        private void addToReceiptButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		///Vietnamese char
+		private static readonly string[] VietNamChar = new string[]
+		{
+			"aAeEoOuUiIdDyY",
+			"áàạảãâấầậẩẫăắằặẳẵ",
+			"ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+			"éèẹẻẽêếềệểễ",
+			"ÉÈẸẺẼÊẾỀỆỂỄ",
+			"óòọỏõôốồộổỗơớờợởỡ",
+			"ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+			"úùụủũưứừựửữ",
+			"ÚÙỤỦŨƯỨỪỰỬỮ",
+			"íìịỉĩ",
+			"ÍÌỊỈĨ",
+			"đ",
+			"Đ",
+			"ýỳỵỷỹ",
+			"ÝỲỴỶỸ"
+		};
+		/// <summary>
+		/// convert to unsigned string
+		/// </summary>
+		/// <param name="str"></param>
+		/// <returns>unsigned string</returns>
+		public static string RemoveSign(string str)
+		{
+			str = str.Normalize(NormalizationForm.FormC);
+			//replace unicode char      
+			for (int i = 1; i < VietNamChar.Length; i++)
+			{
+				for (int j = 0; j < VietNamChar[i].Length; j++)
+				{
+					str = str.Replace(VietNamChar[i][j], VietNamChar[0][i - 1]);
+				}
+			}
+			return str;
+		}
+		#endregion
+
+		private void addToReceiptButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
 			var index = ListViewCakes.SelectedIndex;
 			if (index >= 0)
