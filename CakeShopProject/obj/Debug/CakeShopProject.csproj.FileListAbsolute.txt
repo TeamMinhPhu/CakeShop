@@ -348,7 +348,6 @@ C:\Users\vuanh\Documents\CakeShop\CakeShopProject\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\bin\Debug\MaterialDesignColors.pdb
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\bin\Debug\MaterialDesignThemes.Wpf.pdb
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\bin\Debug\MaterialDesignThemes.Wpf.xml
-C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.csprojAssemblyReference.cache
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\AddCakePage.g.cs
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\AddReceiptPage.g.cs
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\CakePage.g.cs

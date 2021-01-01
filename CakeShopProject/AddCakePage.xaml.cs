@@ -136,7 +136,10 @@ namespace CakeShopProject
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-			this.NavigationService.GoBack();
+            cakeImage.Source = null;
+            cakeImgListView.ItemsSource = null;
+            UpdateLayout();
+            this.NavigationService.GoBack();
             BackBtnClick?.Invoke();
         }
 
@@ -366,7 +369,9 @@ namespace CakeShopProject
                             SaveType(myCakeId);
                         }
 
-                        
+                        cakeImage.Source = null;
+                        cakeImgListView.ItemsSource = null;
+                        UpdateLayout();
                         this.NavigationService.GoBack();
                         BackBtnClick?.Invoke();
                     }
@@ -420,7 +425,11 @@ namespace CakeShopProject
 
         private void SaveCakeImage(string myCakeId, string savedFolderLink)
         {
-            if(_ImageLink.Length == 0)
+            cakeImage.Source = null;
+            cakeImgListView.ItemsSource = null;
+            UpdateLayout();
+
+            if (_ImageLink.Length == 0)
             {
                 if (myViewImgList.Count > 0)
                 {
@@ -493,6 +502,10 @@ namespace CakeShopProject
                             imgLink.Add("");
                         }
 
+                    }
+                    else
+                    {
+                        imgLink.Add(newImg);
                     }
                     i++;
                 }

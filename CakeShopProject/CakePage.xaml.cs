@@ -126,6 +126,9 @@ namespace CakeShopProject
 			var index = ListViewCakes.SelectedIndex;
 			if (index >= 0)
 			{
+				ListViewCakes.ItemsSource = null;
+				UpdateLayout();
+
 				var myID = viewModels[index].ID;
 
 				EditBtnClick?.Invoke(myID);
@@ -292,7 +295,6 @@ namespace CakeShopProject
 			if (index >= 0)
 			{
 				var myID = viewModels[index].ID;
-
 				AddToCard?.Invoke(myID);
 			}
 		}
