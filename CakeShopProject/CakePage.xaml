@@ -148,7 +148,7 @@
                                                     <StackPanel Margin="5" Background="Transparent" Name="editButton" VerticalAlignment="Top" PreviewMouseLeftButtonUp="editButton_PreviewMouseLeftButtonUp" Cursor="Hand">
                                                         <materialDesign:PackIcon Foreground="White" Kind="Pencil" Width="24" Height="24" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Center"></materialDesign:PackIcon>
                                                     </StackPanel>
-                                                    <StackPanel Margin="5" Background="Transparent" Name="addToReceiptButton" VerticalAlignment="Top" PreviewMouseLeftButtonUp="editButton_PreviewMouseLeftButtonUp" Cursor="Hand">
+                                                    <StackPanel Margin="5" Background="Transparent" Name="addToReceiptButton" VerticalAlignment="Top" PreviewMouseLeftButtonUp="addToReceiptButton_PreviewMouseLeftButtonUp" Cursor="Hand">
                                                         <materialDesign:PackIcon Foreground="{DynamicResource PrimaryHueDarkBrush}" Kind="CartAdd" Width="24" Height="24" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Center"></materialDesign:PackIcon>
                                                     </StackPanel>
                                                 </StackPanel>

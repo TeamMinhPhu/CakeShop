@@ -36,8 +36,8 @@
 
                     <Label Content="Phương thức thanh toán" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="10" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
                     <Grid>
-                        <RadioButton GroupName="payMethod" Name="payOnlineRadioBtn" Foreground="{DynamicResource PrimaryHueMidBrush}" HorizontalAlignment="Left" FontSize="18" Margin="50,0,0,20" Content="Thanh toán online" MouseUp="payOnlineRadioBtn_MouseUp"></RadioButton>
-                        <RadioButton GroupName="payMethod" Name="payOfflineRadioBtn" Foreground="{DynamicResource PrimaryHueMidBrush}" HorizontalAlignment="Right" FontSize="18" Margin="250,0,50,20" Content="Thanh toán trực tiếp" MouseUp="payOfflineRadioBtn_MouseUp"></RadioButton>
+                        <RadioButton GroupName="payMethod" Name="payOnlineRadioBtn" Foreground="{DynamicResource PrimaryHueMidBrush}" HorizontalAlignment="Left" FontSize="18" Margin="50,0,0,20" Content="Thanh toán online" Checked="payOnlineRadioBtn_Checked"></RadioButton>
+                        <RadioButton GroupName="payMethod" Name="payOfflineRadioBtn" Foreground="{DynamicResource PrimaryHueMidBrush}" HorizontalAlignment="Right" FontSize="18" Margin="250,0,50,20" Content="Thanh toán trực tiếp" Checked="payOfflineRadioBtn_Checked"></RadioButton>
                     </Grid>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" HorizontalAlignment="Left" Name="prepaidTextBox" Width="220" FontSize="18" Margin="30,0,0,20" materialDesign:HintAssist.Hint="Trả trước (VNĐ)" LostFocus="prepaidTextBox_LostFocus" Visibility="Collapsed"/>

@@ -23,7 +23,10 @@ namespace CakeShopProject
 	{
 		public delegate void ClosingHandler();
 		public event ClosingHandler BackBtnClick;
-		public event ClosingHandler DoneBtnClick;
+		public event ClosingHandler DoneOrCancelBtnClick;
+
+		public delegate void backHandler(BILL tempBill);
+		public event backHandler BackBtnAddModeClick;
 
 		class CakeBillView
         {
@@ -118,32 +121,13 @@ namespace CakeShopProject
 					prepaidTextBox.Visibility = Visibility.Visible;
 
 					var temp = totalMoney - myBill.PREPAID_MONEY;
-					resultTextBlock.Text = $"Số tiền còn lại: {temp} VNĐ";
+					resultTextBlock.Text = $"Số tiền còn lại: {temp}";
 				}
 			}
             else if (myBill.BILLTYPE == 1)
 			{
 				payOfflineRadioBtn.IsChecked = true;
 
-			}
-		}
-
-		private void payOnlineRadioBtn_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-			if(payOnlineRadioBtn.IsChecked == true)
-            {
-				prepaidTextBox.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void payOfflineRadioBtn_MouseUp(object sender, MouseButtonEventArgs e)
-        {
-			if (payOnlineRadioBtn.IsChecked == true)
-			{
-				prepaidTextBox.Visibility = Visibility.Collapsed;
-				resultTextBlock.Visibility = Visibility.Collapsed;
-				prepaidTextBox.Text = "";
-				myBill.PREPAID_MONEY = 0;
 			}
 		}
 
@@ -177,7 +161,7 @@ namespace CakeShopProject
                         {
 							myBill.PREPAID_MONEY = money;
 							resultTextBlock.Visibility = Visibility.Visible;
-							resultTextBlock.Text = $"Số tiền còn lại: {temp} VNĐ";
+							resultTextBlock.Text = $"Số tiền còn lại: {temp}";
 
 						}
                     }
@@ -193,9 +177,19 @@ namespace CakeShopProject
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-			BackBtnClick?.Invoke();
-			UpdateLayout();
-			this.NavigationService.GoBack();
+            if (mode == 0)
+            {
+				saveCurrentStatus();
+				BackBtnAddModeClick?.Invoke(myBill);
+				UpdateLayout();
+				this.NavigationService.GoBack();
+			}
+            else
+            {
+				BackBtnClick?.Invoke();
+				UpdateLayout();
+				this.NavigationService.GoBack();
+			}
 		}
 
         private void doneBtn_Click(object sender, RoutedEventArgs e)
@@ -280,7 +274,7 @@ namespace CakeShopProject
 				MessageBox.Show("Chưa nhập tên khách hàng", "Cảnh báo");
 			}
 
-			DoneBtnClick?.Invoke();
+			DoneOrCancelBtnClick?.Invoke();
 			UpdateLayout();
 			this.NavigationService.GoBack();
 		}
@@ -394,9 +388,62 @@ namespace CakeShopProject
             {
 				SaveBill(0);
             }
-			DoneBtnClick?.Invoke();
+			DoneOrCancelBtnClick?.Invoke();
 			UpdateLayout();
 			this.NavigationService.GoBack();
+		}
+
+		private void saveCurrentStatus()
+        {
+			int billType = 0;
+
+			if (payOnlineRadioBtn.IsChecked == true)
+			{
+				billType = 0;
+			}
+			else
+			{
+				billType = 1;
+			}
+
+			int status = 0;
+            if (shippedCheckBox.IsChecked == true)
+            {
+				status = 2;
+            }
+            else
+            {
+				status = 1;
+            }
+
+			myBill.CUSTOMER_NAME = nameTextBox.Text;
+			myBill.PHONE = phoneTextBox.Text;
+			myBill.EMAIL = emailTextBox.Text;
+			myBill.ADDRESS = addressTextBox.Text;
+			myBill.NOTE = noteTextBox.Text;
+			myBill.BILLTYPE = billType;
+			myBill.PREPAID_MONEY = myBill.PREPAID_MONEY;
+			myBill.STATUS = status;
+
+		}
+
+        private void payOnlineRadioBtn_Checked(object sender, RoutedEventArgs e)
+        {
+			if (payOnlineRadioBtn.IsChecked == true)
+			{
+				prepaidTextBox.Visibility = Visibility.Visible;
+			}
+		}
+
+        private void payOfflineRadioBtn_Checked(object sender, RoutedEventArgs e)
+        {
+			if (payOnlineRadioBtn.IsChecked == true)
+			{
+				prepaidTextBox.Visibility = Visibility.Collapsed;
+				resultTextBlock.Visibility = Visibility.Collapsed;
+				prepaidTextBox.Text = "";
+				myBill.PREPAID_MONEY = 0;
+			}
 		}
     }
 }

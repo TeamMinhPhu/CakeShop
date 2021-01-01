@@ -23,6 +23,11 @@ namespace CakeShopProject
     /// </summary>
     public partial class MainWindow : Window
     {
+		List<BILLDETAIL> myBillDetail;
+		BILL myBill;
+		int totalCake = 0;
+		CakeShopDBEntities db = new CakeShopDBEntities();
+
 		public MainWindow()
 		{
 			InitializeComponent();
@@ -34,7 +39,12 @@ namespace CakeShopProject
 			MaxHeight = SystemParameters.MaximizedPrimaryScreenHeight;
 			MaxWidth = SystemParameters.MaximizedPrimaryScreenWidth;
 
-			this.content.Navigate(new CakePage());
+			resetBill();
+
+			var newCakePage = new CakePage();
+			newCakePage.EditBtnClick += openCakeEditMode;
+			newCakePage.AddToCard += AddToReceipt;
+			this.content.Navigate(newCakePage);
 		}
 
 		
@@ -97,10 +107,6 @@ namespace CakeShopProject
 			config.AppSettings.Settings["Height"].Value = this.Height.ToString();
 			config.Save(ConfigurationSaveMode.Minimal);
 		}
-		private void ShowMenuHandler()
-		{
-			menuBar.Visibility = Visibility.Visible;
-		}
 
 		#region "Navigate"
 		private void infoButton_MouseUp(object sender, MouseButtonEventArgs e)
@@ -117,7 +123,10 @@ namespace CakeShopProject
 
 		private void cakeList_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			this.content.Navigate(new CakePage());
+			var newCakePage = new CakePage();
+			newCakePage.EditBtnClick += openCakeEditMode;
+			newCakePage.AddToCard += AddToReceipt;
+			this.content.Navigate(newCakePage);
 		}
 
 		private void addCakeButton_MouseUp(object sender, MouseButtonEventArgs e)
@@ -140,10 +149,72 @@ namespace CakeShopProject
 
 		private void addReceiptButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			//this.content.Navigate(new AddReceiptPage());
+            if (myBillDetail.Count > 0)
+            {
+				menuBar.Visibility = Visibility.Collapsed;
+				var newAddReceipt = new AddReceiptPage(myBillDetail, myBill);
+				newAddReceipt.BackBtnAddModeClick += ReceiptBackHandler;
+				newAddReceipt.DoneOrCancelBtnClick += resetBill;
+				this.content.Navigate(newAddReceipt);
+			}
+            else
+            {
+				MessageBox.Show("Chưa thêm bánh vào đơn hàng");
+            }
 		}
 		#endregion
 
+		private void ShowMenuHandler()
+		{
+			menuBar.Visibility = Visibility.Visible;
+			var newCakePage = new CakePage();
+			newCakePage.EditBtnClick += openCakeEditMode;
+			newCakePage.AddToCard += AddToReceipt;
+			this.content.Navigate(newCakePage);
+		}
 
+		private void openCakeEditMode(string Id)
+        {
+			menuBar.Visibility = Visibility.Collapsed;
+			var newAddCakePage = new AddCakePage(Id);
+			newAddCakePage.BackBtnClick += ShowMenuHandler;
+			this.content.Navigate(newAddCakePage);
+		}
+
+		private void AddToReceipt(string Id)
+		{
+			var temp = myBillDetail.Where(c => c.CAKE_ID.Contains(Id)).FirstOrDefault();
+            if (temp != null)
+            {
+				temp.QUANTITY++;
+            }
+            else
+            {
+				myBillDetail.Add(new BILLDETAIL { BILL_ID = myBill.BILL_ID, CAKE_ID = Id, QUANTITY = 1 });
+            }
+
+			totalCake++;
+			notificationGrid.Visibility = Visibility.Visible;
+			notificationTextBlock.Text = $"{totalCake}";
+		}
+
+		private void resetBill()
+        {
+			menuBar.Visibility = Visibility.Visible;
+			totalCake = 0;
+			notificationGrid.Visibility = Visibility.Collapsed;
+			var billNumber = db.BILLs.Count();
+			var billcode = $"BILL{billNumber}";
+			billcode = billcode.Replace(" ", "");
+
+			myBillDetail = new List<BILLDETAIL>();
+			myBill = new BILL { BILL_ID = billcode };
+		}
+
+		private void ReceiptBackHandler(BILL tempBill)
+        {
+			menuBar.Visibility = Visibility.Visible;
+			myBill = tempBill;
+        }
 	}
 }

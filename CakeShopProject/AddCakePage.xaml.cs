@@ -56,6 +56,7 @@ namespace CakeShopProject
         {
             InitializeComponent();
             myCakeId = tempId;
+            myCakeId = myCakeId.Replace(" ", "");
             mode = 1;
         }
 
@@ -86,10 +87,12 @@ namespace CakeShopProject
             //edit mode
             if (mode == 1) 
             {
+                myCakeId = myCakeId.Replace(" ", "");
+
                 myCake = db.CAKEs.Where(c => c.CAKE_ID == myCakeId).FirstOrDefault();
 
                 nameTextBox.Text = myCake.CAKE_NAME;
-                priceTextBox.Text = $"{myCake.CAKE_PRICE}";
+                priceTextBox.Text = $"{(long)myCake.CAKE_PRICE}";
 
                 var type = db.TYPEs.Where(c => c.TYPE_ID == myCake.TYPE_ID).FirstOrDefault();
 
@@ -99,12 +102,11 @@ namespace CakeShopProject
                 ///load img
                 var Folder = AppDomain.CurrentDomain.BaseDirectory;
 
-                var ImgList = db.CAKE_IMAGES.Where(c => c.CAKE_ID == myCakeId).ToList();
-                var mainImg = ImgList.Where(c => c.IMAGE_ID == myCakeId).FirstOrDefault();
-                if (mainImg != null)
-                {
-                    ImgList.Remove(mainImg);
+                var ImgList = db.CAKE_IMAGES.Where(c => c.CAKE_ID == myCakeId).OrderBy(c => c.IMAGE_ID).ToList();
 
+                if (ImgList.Count > 0)
+                {
+                    var mainImg = ImgList[0];
                     _ImageLink = mainImg.IMAGE_LINK;
                     ///display image
                     if (_ImageLink.Length > 0)
@@ -115,26 +117,28 @@ namespace CakeShopProject
                         cakeImageHint.Visibility = Visibility.Hidden;
                     }
 
-                    if (ImgList.Count > 0)
+                    if (ImgList.Count > 1)
                     {
-                        foreach(var img in ImgList)
+                        for (int i = 1; i < ImgList.Count; i++) 
                         {
-                            var link = Folder + img.IMAGE_LINK;
+                            var link = Folder + ImgList[i].IMAGE_LINK;
                             myViewImgList.Add(new CakeImage { ImageLink = link });
                         }
+                        
                         cakeImgListView.ItemsSource = myViewImgList;
+                        cakeImgListView.Visibility = Visibility.Visible;
                     }
                 }
+                
                 
             }
         }
 
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
-			BackBtnClick?.Invoke();
-			UpdateLayout();
 			this.NavigationService.GoBack();
-		}
+            BackBtnClick?.Invoke();
+        }
 
         private void cakeImage_Drop(object sender, DragEventArgs e)
         {
@@ -346,14 +350,14 @@ namespace CakeShopProject
                         }
                         else
                         {
+                            myCakeId = myCakeId.Replace(" ", "");
+
                             //Create folder to save image
                             var Folder = AppDomain.CurrentDomain.BaseDirectory;
                             var savedFolderLink = $"Resources\\Images\\{myCakeId}";
                             MyFileManager.CheckDictionary($"{Folder}{savedFolderLink}");
 
-                            //remove old data
                             db.CAKE_IMAGES.RemoveRange(db.CAKE_IMAGES.Where(c => c.CAKE_ID == myCakeId).ToList());
-                            db.CAKEs.Remove(myCake);
 
                             SaveNewCake(myCakeId, cakePrice);
 
@@ -362,9 +366,9 @@ namespace CakeShopProject
                             SaveType(myCakeId);
                         }
 
-                        BackBtnClick?.Invoke();
-                        UpdateLayout();
+                        
                         this.NavigationService.GoBack();
+                        BackBtnClick?.Invoke();
                     }
                 }
                 else
@@ -376,19 +380,33 @@ namespace CakeShopProject
 
         private void SaveNewCake(string myCakeId, long price)
         {
-            var now = DateTime.UtcNow;
-            var newCake = new CAKE
+            if (mode == 0)
             {
-                CAKE_ID = myCakeId,
-                CAKE_NAME = nameTextBox.Text,
-                CAKE_PRICE = price,
-                CAKE_DESCRIPTION = cakeDescriptionTextBox.Text,
-                EXIST_STATUS = true,
-                ADDED_DATE = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second)
+                var now = DateTime.UtcNow;
+                var newCake = new CAKE
+                {
+                    CAKE_ID = myCakeId,
+                    CAKE_NAME = nameTextBox.Text,
+                    CAKE_PRICE = price,
+                    CAKE_DESCRIPTION = cakeDescriptionTextBox.Text,
+                    EXIST_STATUS = true,
+                    ADDED_DATE = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second)
 
-            };
+                };
 
-            db.CAKEs.Add(newCake);
+                db.CAKEs.Add(newCake);
+            }
+            else
+            {
+                var cake = db.CAKEs.Where(c => c.CAKE_ID == myCakeId).FirstOrDefault();
+                var now = DateTime.UtcNow;
+
+                cake.CAKE_NAME = nameTextBox.Text;
+                cake.CAKE_PRICE = price;
+                cake.CAKE_DESCRIPTION = cakeDescriptionTextBox.Text;
+                cake.ADDED_DATE = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
+            }
+           
 
             try
             {
@@ -480,17 +498,18 @@ namespace CakeShopProject
                 }
             }
 
-            for(int i = 0; i < imgLink.Count; i++)
+            for (int i = 0; i < imgLink.Count; i++)
             {
                 var newCakeImg = new CAKE_IMAGES
                 {
                     CAKE_ID = myCakeId,
-                    IMAGE_ID = imgCode[i],
+                    IMAGE_ID = imgCode[i].Replace(" ", ""),
                     IMAGE_LINK = imgLink[i]
                 };
 
                 db.CAKE_IMAGES.Add(newCakeImg);
             }
+
 
             try
             {

@@ -23,6 +23,10 @@ namespace CakeShopProject
 	/// </summary>
 	public partial class CakePage : Page
 	{
+		public delegate void CakeEditHandler(string cakeId);
+		public event CakeEditHandler EditBtnClick;
+		public event CakeEditHandler AddToCard;
+
 		int _current_page = 1;
 		string _search = "";
 		int _selected_index;
@@ -122,9 +126,9 @@ namespace CakeShopProject
 			var index = ListViewCakes.SelectedIndex;
 			if (index >= 0)
 			{
-				//var myID = viewModels[index].ID;
+				var myID = viewModels[index].ID;
 
-				//NewWindowOpen?.Invoke(myID);
+				EditBtnClick?.Invoke(myID);
 			}
 
 		}
@@ -213,7 +217,34 @@ namespace CakeShopProject
 
 		private void deleteButton_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
 		{
-			//delete
+			var index = ListViewCakes.SelectedIndex;
+			if (index >= 0)
+			{
+				try
+				{
+					var myID = viewModels[index].ID;
+					var cake = db.CAKEs.Where(c => c.CAKE_ID == myID).FirstOrDefault();
+					if (cake != null)
+					{
+						cake.EXIST_STATUS = false;
+						db.SaveChanges();
+
+						_current_page = 1;
+						paging.SelectedIndex = 0;
+						UpdateView();
+
+						MessageBox.Show("Đã xóa bánh");
+					}
+					else
+					{
+						MessageBox.Show("Không tìm thấy bánh");
+					}
+				}
+				catch
+				{
+					MessageBox.Show("Không thể xóa bánh", "Lỗi");
+				}
+			}
 		}
 
 		private BindingList<ViewModel> GetViewModel()
@@ -255,5 +286,15 @@ namespace CakeShopProject
 			return result;
 		}
 
-	}
+        private void addToReceiptButton_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+			var index = ListViewCakes.SelectedIndex;
+			if (index >= 0)
+			{
+				var myID = viewModels[index].ID;
+
+				AddToCard?.Invoke(myID);
+			}
+		}
+    }
 }
