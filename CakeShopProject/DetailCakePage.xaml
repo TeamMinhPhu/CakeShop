@@ -16,23 +16,23 @@
                 <Button Width="35" Height="35" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="3" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
                     <materialDesign:PackIcon Kind="ArrowBack" Width="30" Height="30" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
                 </Button>
-                <Label Name="CakeNameLabel" Content="Bánh" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" Margin="80,20,80,20" VerticalContentAlignment="Center"></Label>
+                <Label Name="CakeNameLabel" Content="Bánh" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center" Margin="80,0,80,20" VerticalContentAlignment="Center"></Label>
             </Grid>
 
-            <Grid MinHeight="450" Margin="0,100,0,110">
+            <Grid MinHeight="500" Margin="0,65,0,110">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <Grid MinWidth="400" MinHeight="450" MaxHeight="600" Grid.Column="0" HorizontalAlignment="Left">
+                <Grid MinWidth="400" MinHeight="500" MaxHeight="600" Grid.Column="0" HorizontalAlignment="Left">
                     <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Text="Giá: 0 VNĐ" Padding="5,0,5,0" Name="priceTextBlock" MinWidth="300" MaxWidth="500" FontSize="30" Margin="40,30,0,30"/>
                     <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Text="Loại bánh:" Padding="5,0,5,0" Name="typeTextBlock" MinWidth="300" MaxWidth="500" FontSize="30" Margin="40,120,0,30"/>
                     <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Text="Mô tả" Padding="5,0,5,0" MinWidth="300" MaxWidth="500" FontSize="30" Margin="40,210,0,30"/>
                     <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Text="Mô tả" Padding="5,0,5,0" Name="descriptionTextBlock" MinWidth="300" MaxWidth="500" FontSize="30" Margin="40,250,0,30"/>
                 </Grid>
 
-                <StackPanel MinWidth="400" Grid.Column="1">
+                <StackPanel MinWidth="450" MinHeight="500" Grid.Column="1">
 
                     <Border BorderThickness="1" BorderBrush="Black" Height="250" Width="400" Margin="20,20,20,0">
                         <Image Height="248" Width="398" x:Name="cakeImage" Source="Resources/Icons/picture.png" Stretch="Fill"/>
