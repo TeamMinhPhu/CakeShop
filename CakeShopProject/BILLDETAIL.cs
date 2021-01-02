@@ -17,6 +17,7 @@ namespace CakeShopProject
         public string BILL_ID { get; set; }
         public string CAKE_ID { get; set; }
         public Nullable<int> QUANTITY { get; set; }
+        public Nullable<decimal> PRICE { get; set; }
     
         public virtual BILL BILL { get; set; }
         public virtual CAKE CAKE { get; set; }

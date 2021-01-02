@@ -86,7 +86,7 @@
             </Grid>
         </Grid>
         <!-- ~~~~~~~~~~~~~~~~~~~End View for paging~~~~~~~~~~~~~~~~~~~-->
-        <DataGrid x:Name="receipt" IsReadOnly="True" AutoGenerateColumns="False" Padding="0" Margin="20 0" ColumnWidth="*">
+        <DataGrid x:Name="receipt" IsReadOnly="True" AutoGenerateColumns="False" Padding="0" Margin="20 0" ColumnWidth="*" MouseUp="receipt_MouseUp">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Họ và tên"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Phone}" Header="Số điện thoại"></DataGridTextColumn>

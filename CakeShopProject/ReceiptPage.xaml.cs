@@ -22,6 +22,9 @@ namespace CakeShopProject
 	/// </summary>
 	public partial class ReceiptPage : Page
 	{
+		public delegate void ReceiptEditHandler(string receiptId);
+		public event ReceiptEditHandler ReceiptClicked;
+
 		int _current_page = 1;
 		int _total_items;
 		int _itemPerPage = 10;
@@ -58,6 +61,26 @@ namespace CakeShopProject
 			foreach (var viewData in query)
 			{
 				ReceiptViewModel viewModel = new ReceiptViewModel();
+
+				var ListPrice = db.BILLDETAILs.Where(c => c.BILL_ID == viewData.BILL_ID).Select(c => c.PRICE).ToList();
+				if(ListPrice == null)
+                {
+					viewModel.Payment = 0;
+                }
+                else
+                {
+					long totalPrice = 0;
+					foreach(var price in ListPrice)
+                    {
+                        try
+                        {
+							totalPrice += (long)price;
+                        }
+                        catch { /*do nothing*/ }
+                    }
+					viewModel.Payment = totalPrice;
+				}
+				
 				viewModel.ID = viewData.BILL_ID;
 				viewModel.Name = viewData.CUSTOMER_NAME;
 				viewModel.Note = viewData.NOTE;
@@ -81,6 +104,10 @@ namespace CakeShopProject
 				else if (viewData.STATUS == 2)
 				{
 					viewModel.Status = "Đã thanh toán";
+				}
+				else if (viewData.STATUS == 0)
+                {
+					viewModel.Status = "Đã hủy";
 				}
 				result.Add(viewModel);
 			}
@@ -252,6 +279,16 @@ namespace CakeShopProject
 			}
 			return str;
 		}
-		#endregion
-	}
+        #endregion
+
+        private void receipt_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+			var index = receipt.SelectedIndex;
+			if (index >= 0)
+			{
+				var myID = viewModels[index].ID;
+				ReceiptClicked?.Invoke(myID);
+			}
+		}
+    }
 }

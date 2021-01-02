@@ -78,12 +78,12 @@ namespace CakeShopProject
 			addressTextBox.Text = myBill.ADDRESS;
 			noteTextBox.Text = myBill.NOTE;
 
-			//Table
+			//Cake Table
 			myCakeView = new BindingList<CakeBillView>();
 			foreach (var item in myBillDetail)
 			{
 				var cake = db.CAKEs.Select(c => new { c.CAKE_ID, c.CAKE_NAME, c.CAKE_PRICE }).Where(c => c.CAKE_ID == item.CAKE_ID).FirstOrDefault();
-				myCakeView.Add(new CakeBillView { CakeName = cake.CAKE_NAME, Cost = (long)cake.CAKE_PRICE, Quantity = (int)item.QUANTITY });
+				myCakeView.Add(new CakeBillView { CakeName = cake.CAKE_NAME, Cost = (long)item.PRICE, Quantity = (int)item.QUANTITY });
             }
 			cakeDataList.ItemsSource = myCakeView;
 
@@ -181,13 +181,11 @@ namespace CakeShopProject
             {
 				saveCurrentStatus();
 				BackBtnAddModeClick?.Invoke(myBill);
-				UpdateLayout();
 				this.NavigationService.GoBack();
 			}
             else
             {
 				BackBtnClick?.Invoke();
-				UpdateLayout();
 				this.NavigationService.GoBack();
 			}
 		}
@@ -275,7 +273,6 @@ namespace CakeShopProject
 			}
 
 			DoneOrCancelBtnClick?.Invoke();
-			UpdateLayout();
 			this.NavigationService.GoBack();
 		}
 
@@ -437,7 +434,7 @@ namespace CakeShopProject
 
         private void payOfflineRadioBtn_Checked(object sender, RoutedEventArgs e)
         {
-			if (payOnlineRadioBtn.IsChecked == true)
+			if (payOfflineRadioBtn.IsChecked == true)
 			{
 				prepaidTextBox.Visibility = Visibility.Collapsed;
 				resultTextBlock.Visibility = Visibility.Collapsed;

@@ -134,6 +134,9 @@
     <Compile Include="Classes\MyFileManager.cs" />
     <Compile Include="Classes\Paging.cs" />
     <Compile Include="Classes\ViewModel.cs" />
+    <Compile Include="DetailCakePage.xaml.cs">
+      <DependentUpon>DetailCakePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
@@ -158,6 +161,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CakePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DetailCakePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

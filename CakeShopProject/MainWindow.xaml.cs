@@ -41,10 +41,7 @@ namespace CakeShopProject
 
 			resetBill();
 
-			var newCakePage = new CakePage();
-			newCakePage.EditBtnClick += openCakeEditMode;
-			newCakePage.AddToCard += AddToReceipt;
-			this.content.Navigate(newCakePage);
+			OpenCakeList();
 		}
 
 		
@@ -123,10 +120,7 @@ namespace CakeShopProject
 
 		private void cakeList_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			var newCakePage = new CakePage();
-			newCakePage.EditBtnClick += openCakeEditMode;
-			newCakePage.AddToCard += AddToReceipt;
-			this.content.Navigate(newCakePage);
+			OpenCakeList();
 		}
 
 		private void addCakeButton_MouseUp(object sender, MouseButtonEventArgs e)
@@ -144,7 +138,7 @@ namespace CakeShopProject
 
 		private void receiptListButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			this.content.Navigate(new ReceiptPage());
+			openReceiptList();
 		}
 
 		private void addReceiptButton_MouseUp(object sender, MouseButtonEventArgs e)
@@ -167,9 +161,15 @@ namespace CakeShopProject
 		private void ShowMenuHandler()
 		{
 			menuBar.Visibility = Visibility.Visible;
+			OpenCakeList();
+		}
+
+		private void OpenCakeList()
+        {
 			var newCakePage = new CakePage();
 			newCakePage.EditBtnClick += openCakeEditMode;
 			newCakePage.AddToCard += AddToReceipt;
+			newCakePage.ViewBtnClick += openCakeViewMode;
 			this.content.Navigate(newCakePage);
 		}
 
@@ -181,21 +181,55 @@ namespace CakeShopProject
 			this.content.Navigate(newAddCakePage);
 		}
 
+		private void openCakeViewMode(string Id)
+		{
+			menuBar.Visibility = Visibility.Collapsed;
+			var newViewCakePage = new DetailCakePage(Id);
+			newViewCakePage.BackBtnClick += ShowMenuHandler;
+			this.content.Navigate(newViewCakePage);
+		}
+
+		private void openReceiptEditMode(string Id)
+		{
+			menuBar.Visibility = Visibility.Collapsed;
+			var newAddReceipt = new AddReceiptPage(Id);
+			newAddReceipt.BackBtnClick += openReceiptList;
+			newAddReceipt.DoneOrCancelBtnClick += openReceiptList;
+			this.content.Navigate(newAddReceipt);
+		}
+
+		private void openReceiptList()
+        {
+			menuBar.Visibility = Visibility.Visible;
+			var receiptListPage = new ReceiptPage();
+			receiptListPage.ReceiptClicked += openReceiptEditMode;
+			this.content.Navigate(receiptListPage);
+		}
+
 		private void AddToReceipt(string Id)
 		{
 			var temp = myBillDetail.Where(c => c.CAKE_ID.Contains(Id)).FirstOrDefault();
             if (temp != null)
             {
 				temp.QUANTITY++;
-            }
+				totalCake++;
+				notificationGrid.Visibility = Visibility.Visible;
+				notificationTextBlock.Text = $"{totalCake}";
+			}
             else
             {
-				myBillDetail.Add(new BILLDETAIL { BILL_ID = myBill.BILL_ID, CAKE_ID = Id, QUANTITY = 1 });
+				var price = db.CAKEs.Where(c => c.CAKE_ID == Id).Select(c => c.CAKE_PRICE).FirstOrDefault();
+                if (price != null)
+                {
+					myBillDetail.Add(new BILLDETAIL { BILL_ID = myBill.BILL_ID, CAKE_ID = Id, QUANTITY = 1, PRICE = price });
+					totalCake++;
+					notificationGrid.Visibility = Visibility.Visible;
+					notificationTextBlock.Text = $"{totalCake}";
+				}
+				
             }
 
-			totalCake++;
-			notificationGrid.Visibility = Visibility.Visible;
-			notificationTextBlock.Text = $"{totalCake}";
+			
 		}
 
 		private void resetBill()
@@ -216,5 +250,7 @@ namespace CakeShopProject
 			menuBar.Visibility = Visibility.Visible;
 			myBill = tempBill;
         }
+
+		
 	}
 }

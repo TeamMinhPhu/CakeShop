@@ -135,7 +135,7 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border Width="300" Height="200">
-                                    <Grid Name="trip" MouseLeftButtonUp="trip_MouseLeftButtonUp">
+                                    <Grid Name="cake">
                                         <Border Width="290" Height="190" CornerRadius="5">
                                             <Border.Effect>
                                                 <DropShadowEffect ShadowDepth="1"/>
@@ -143,8 +143,8 @@
                                         </Border>
                                         <Border Margin="5" VerticalAlignment="Stretch" CornerRadius="5">
                                             <Grid VerticalAlignment="Stretch">
-                                                <Image Source="{Binding CoverImage, Converter={StaticResource converter}}"/>
-                                                <StackPanel Background="#aaffffff" VerticalAlignment="Top" HorizontalAlignment="Right">
+                                                <Image Source="{Binding CoverImage, Converter={StaticResource converter}}" MouseUp="cake_MouseLeftButtonUp"/>
+                                                <StackPanel Background="#aaffffff" VerticalAlignment="Top" HorizontalAlignment="Right" Panel.ZIndex="10">
                                                     <StackPanel Margin="5" Background="Transparent" Name="editButton" VerticalAlignment="Top" PreviewMouseLeftButtonUp="editButton_PreviewMouseLeftButtonUp" Cursor="Hand">
                                                         <materialDesign:PackIcon Foreground="White" Kind="Pencil" Width="24" Height="24" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Center"></materialDesign:PackIcon>
                                                     </StackPanel>
@@ -152,7 +152,7 @@
                                                         <materialDesign:PackIcon Foreground="{DynamicResource PrimaryHueDarkBrush}" Kind="CartAdd" Width="24" Height="24" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Center"></materialDesign:PackIcon>
                                                     </StackPanel>
                                                 </StackPanel>
-                                                <StackPanel VerticalAlignment="Bottom" Background="#88ffffff">
+                                                <StackPanel VerticalAlignment="Bottom" Background="#88ffffff" MouseUp="cake_MouseLeftButtonUp">
                                                     <TextBlock FontSize="16" FontWeight="DemiBold" Foreground="Black" Margin="10 2 0 -5" Text="{Binding Name}"></TextBlock>
                                                     <StackPanel Orientation="Horizontal">
                                                         <TextBlock FontSize="20" FontWeight="SemiBold" Foreground="{DynamicResource PrimaryHueDarkBrush}" Margin="10 0 0 5" Text="{Binding Price}"></TextBlock>
@@ -172,7 +172,7 @@
                         </ItemsControl.ItemsPanel>
                         <ListView.Resources>
                             <ContextMenu x:Key="ItemContextMenu">
-                                <MenuItem Header="Chi tiết" PreviewMouseLeftButtonUp="trip_MouseLeftButtonUp" Command="{Binding Path=DataContext.Detail, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"/>
+                                <MenuItem Header="Chi tiết" PreviewMouseLeftButtonUp="cake_MouseLeftButtonUp" Command="{Binding Path=DataContext.Detail, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"/>
                                 <MenuItem Header="Chỉnh sửa" PreviewMouseLeftButtonUp="editButton_PreviewMouseLeftButtonUp" Command="{Binding Path=DataContext.Edit, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"/>
                                 <MenuItem Header="Xóa" PreviewMouseLeftButtonDown="deleteButton_PreviewMouseLeftButtonDown" Command="{Binding Path=DataContext.Delete, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ListView}}"/>
                             </ContextMenu>

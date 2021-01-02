@@ -26,6 +26,7 @@ namespace CakeShopProject
 		public delegate void CakeEditHandler(string cakeId);
 		public event CakeEditHandler EditBtnClick;
 		public event CakeEditHandler AddToCard;
+		public event CakeEditHandler ViewBtnClick;
 
 		int _current_page = 1;
 		string _search = "";
@@ -84,13 +85,20 @@ namespace CakeShopProject
 		#endregion
 
 		//Detail
-		private void trip_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+		private void cake_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
 		{
 			try
 			{
-				string ID = viewModels[_selected_index].ID;
-				//TRIP tripDetail = db.TRIPs.First(c => c.TRIP_ID == ID);
-				//this.NavigationService.Navigate(new DetailPage(ID));
+				int index = ListViewCakes.SelectedIndex;
+                if (index >= 0)
+                {
+					string ID = viewModels[index].ID;
+
+					ListViewCakes.ItemsSource = null;
+					UpdateLayout();
+
+					ViewBtnClick?.Invoke(ID);
+				}
 			}
 			catch
 			{
@@ -287,7 +295,7 @@ namespace CakeShopProject
 
 			///search
 			_search = RemoveSign(_search);
-			result = db.CAKEs.Where(c => RemoveSign(c.CAKE_NAME).Contains(_search)).ToList();
+			result = db.CAKEs.Where(c => (RemoveSign(c.CAKE_NAME).Contains(_search) && c.EXIST_STATUS == true)).ToList();
 			return result;
 		}
 
@@ -339,5 +347,6 @@ namespace CakeShopProject
 				AddToCard?.Invoke(myID);
 			}
 		}
+
     }
 }

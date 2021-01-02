@@ -23,7 +23,7 @@ namespace CakeShopProject.Classes
 		public string Email { get; set; }
 		public string Address { get; set; }
 		public string Note { get; set; }
-		public int Payment { get; set; }
+		public long Payment { get; set; }
 		public string PaymentType { get; set; }
 		public string Status { get; set; }
 	}
