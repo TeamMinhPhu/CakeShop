@@ -62,7 +62,7 @@
 
                     <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Text="Tổng: 0 VNĐ" HorizontalAlignment="Right" Name="totalTextBlock" Width="220" FontSize="18" Margin="30,20,20,20"/>
                     <CheckBox Foreground="{DynamicResource PrimaryHueMidBrush}" Padding="5,0,5,0" Content="Đã giao" HorizontalAlignment="Right" Name="shippedCheckBox" Width="220" FontSize="18" Margin="30,0,20,20"/>
-                    <DatePicker Name="completedOrderDate" HorizontalAlignment="Center" FontSize="20"></DatePicker>
+                    <DatePicker Name="billDatePicker" Padding="10,5,10,5" Width="200" HorizontalAlignment="Right" materialDesign:HintAssist.Hint="Chọn ngày thanh toán" FontSize="18" Foreground="{DynamicResource PrimaryHueMidBrush}" Margin="30,0,40,20"/>
                 </StackPanel>
             </Grid>
 

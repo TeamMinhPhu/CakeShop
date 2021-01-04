@@ -31,8 +31,14 @@
         </Style>
     </Page.Resources>
     <StackPanel>
+        <Grid Height="50" VerticalAlignment="Top">
+            <Button Width="25" Height="25" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="2.5" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
+                <materialDesign:PackIcon Kind="ArrowBack" Width="20" Height="20" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
+            </Button>
+            <Label Content="Danh sách đơn hàng" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+        </Grid>
         <!-- ~~~~~~~~~~~~~~~~~~~Begin View for paging~~~~~~~~~~~~~~~~~~~-->
-        <Grid Margin="20">
+        <Grid Margin="20,10,20,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="300"></ColumnDefinition>
                 <ColumnDefinition Width="200"></ColumnDefinition>

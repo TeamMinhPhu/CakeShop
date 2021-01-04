@@ -77,7 +77,7 @@ namespace CakeShopProject
 			emailTextBox.Text = myBill.EMAIL;
 			addressTextBox.Text = myBill.ADDRESS;
 			noteTextBox.Text = myBill.NOTE;
-			completedOrderDate.SelectedDate = myBill.COMPLETED_DATE;
+			billDatePicker.SelectedDate = myBill.COMPLETED_DATE;
 
 			//Cake Table
 			myCakeView = new BindingList<CakeBillView>();
@@ -327,7 +327,7 @@ namespace CakeShopProject
 					newBill.STATUS = status;
 				}
 
-				var now = DateTime.UtcNow;
+				//var now = DateTime.UtcNow;
 				
 				if (status != 2)
 				{
@@ -335,8 +335,7 @@ namespace CakeShopProject
 				}
 				else
 				{
-					//newBill.COMPLETED_DATE = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second);
-					newBill.COMPLETED_DATE = completedOrderDate.SelectedDate;
+					newBill.COMPLETED_DATE = billDatePicker.SelectedDate;
 				}
 			}
             else
@@ -424,6 +423,8 @@ namespace CakeShopProject
 			myBill.BILLTYPE = billType;
 			myBill.PREPAID_MONEY = myBill.PREPAID_MONEY;
 			myBill.STATUS = status;
+
+			myBill.COMPLETED_DATE = billDatePicker.SelectedDate;
 
 		}
 
