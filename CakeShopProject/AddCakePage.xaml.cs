@@ -450,6 +450,7 @@ namespace CakeShopProject
             {
                 //Save main Image
                 var myFilePath = $"{Folder}{cakeImgLink}";
+                imgLink.Add(cakeImgLink);
 
                 if (_ImageLink != myFilePath)
                 {
@@ -459,11 +460,10 @@ namespace CakeShopProject
                         MyFileManager.CheckExistedFile(myFilePath);
                         //Copy image to new folder
                         System.IO.File.Copy(_ImageLink, myFilePath);
-                        imgLink.Add(cakeImgLink);
                     }
                     catch 
                     {
-                        imgLink.Add("");
+                        /*do nothing*/
                     }
 
                 }
@@ -483,7 +483,7 @@ namespace CakeShopProject
                 {
                     var newImg = $"{savedFolderLink}\\{myCakeId}_{i}.jpg";
                     imgCode.Add($"{myCakeId}_{i}");
-
+                    imgLink.Add(newImg);
                     //Save Image
                     var myFilePath = $"{Folder}{newImg}";
 
@@ -495,17 +495,11 @@ namespace CakeShopProject
                             MyFileManager.CheckExistedFile(myFilePath);
                             //Copy image to new folder
                             System.IO.File.Copy(item.ImageLink, myFilePath);
-                            imgLink.Add(newImg);
                         }
                         catch
                         {
-                            imgLink.Add("");
+                            /*do nothing*/
                         }
-
-                    }
-                    else
-                    {
-                        imgLink.Add(newImg);
                     }
                     i++;
                 }

@@ -237,6 +237,11 @@ namespace CakeShopProject
 							int status = 0;
 							if(shippedCheckBox.IsChecked == true)
                             {
+								if(billDatePicker.SelectedDate == null)
+                                {
+									MessageBox.Show("Chưa chọn ngày thanh toán", "Cảnh báo");
+									return;
+								}
 								status = 2;
                             }
                             else
@@ -252,6 +257,11 @@ namespace CakeShopProject
 							int status = 0;
 							if (shippedCheckBox.IsChecked == true)
 							{
+								if (billDatePicker.SelectedDate == null)
+								{
+									MessageBox.Show("Chưa chọn ngày thanh toán", "Cảnh báo");
+									return;
+								}
 								status = 2;
 							}
 							else
