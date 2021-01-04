@@ -12,7 +12,7 @@
       Title="StatisticsPage"
       Loaded="Page_Loaded">
 
-    <Grid>
+    <StackPanel>
         <StackPanel Margin="2" Background="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             
@@ -40,5 +40,10 @@
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </StackPanel>
-    </Grid>
+        <StackPanel>
+            <lvc:PieChart LegendLocation="Right" Hoverable="True" Height="300" DataTooltip="{x:Null}" Series="{Binding TypeChart}" Margin="5 0 20 0">
+                
+            </lvc:PieChart>
+        </StackPanel>
+    </StackPanel>
 </Page>
