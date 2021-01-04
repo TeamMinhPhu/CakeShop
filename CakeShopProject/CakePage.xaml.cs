@@ -273,12 +273,14 @@ namespace CakeShopProject
 				viewModel.ID = viewData.CAKE_ID;
 				viewModel.Name = viewData.CAKE_NAME;
 
-				if (viewData.CAKE_IMAGES.ToList()[0].IMAGE_LINK =="")
+				if (viewData.CAKE_IMAGES.Count == 0)
 				{
 					viewModel.CoverImage = "Resources/Images/sora.jpg";
 				}
 				else
-				viewModel.CoverImage = viewData.CAKE_IMAGES.ToList()[0].IMAGE_LINK;
+				{
+					viewModel.CoverImage = viewData.CAKE_IMAGES.ToList()[0].IMAGE_LINK;
+				}
 				viewModel.Price = (int)viewData.CAKE_PRICE;
 				result.Add(viewModel);
 
@@ -295,7 +297,7 @@ namespace CakeShopProject
 
 			///search
 			_search = RemoveSign(_search);
-			result = db.CAKEs.Where(c => (RemoveSign(c.CAKE_NAME).Contains(_search) && c.EXIST_STATUS == true)).ToList();
+			result = db.CAKEs.ToList().Where(c => (RemoveSign(c.CAKE_NAME).Contains(_search) && c.EXIST_STATUS == true)).ToList();
 			return result;
 		}
 

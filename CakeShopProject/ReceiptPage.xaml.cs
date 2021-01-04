@@ -62,7 +62,7 @@ namespace CakeShopProject
 			{
 				ReceiptViewModel viewModel = new ReceiptViewModel();
 
-				var ListPrice = db.BILLDETAILs.Where(c => c.BILL_ID == viewData.BILL_ID).Select(c => c.PRICE).ToList();
+				var ListPrice = db.BILLDETAILs.Where(c => c.BILL_ID == viewData.BILL_ID).Select(c => new { c.PRICE, c.QUANTITY}).ToList();
 				if(ListPrice == null)
                 {
 					viewModel.Payment = 0;
@@ -70,11 +70,11 @@ namespace CakeShopProject
                 else
                 {
 					long totalPrice = 0;
-					foreach(var price in ListPrice)
+					foreach(var cake in ListPrice)
                     {
                         try
                         {
-							totalPrice += (long)price;
+							totalPrice += (long)cake.PRICE * (int)cake.QUANTITY;
                         }
                         catch { /*do nothing*/ }
                     }
@@ -122,7 +122,7 @@ namespace CakeShopProject
 
 			///search
 			_search = RemoveSign(_search);
-			result = db.BILLs.Where(c => RemoveSign(c.CUSTOMER_NAME).Contains(_search) || RemoveSign(c.EMAIL).Contains(_search) || RemoveSign(c.PHONE).Contains(_search)).ToList();
+			result = db.BILLs.ToList().Where(c => RemoveSign(c.CUSTOMER_NAME).Contains(_search) || RemoveSign(c.EMAIL).Contains(_search) || RemoveSign(c.PHONE).Contains(_search)).ToList();
 			return result;
 		}
 

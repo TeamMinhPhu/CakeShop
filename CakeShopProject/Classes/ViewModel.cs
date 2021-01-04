@@ -26,5 +26,6 @@ namespace CakeShopProject.Classes
 		public long Payment { get; set; }
 		public string PaymentType { get; set; }
 		public string Status { get; set; }
+		public string Date { get; set; }
 	}
 }

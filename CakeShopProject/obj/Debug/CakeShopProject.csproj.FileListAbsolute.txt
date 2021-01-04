@@ -380,3 +380,5 @@ C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.cspr
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.csproj.CopyComplete
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.exe
 C:\Users\vuanh\Documents\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.pdb
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\DetailCakePage.g.cs
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\DetailCakePage.baml

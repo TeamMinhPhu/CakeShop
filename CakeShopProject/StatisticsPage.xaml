@@ -4,11 +4,41 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CakeShopProject"
+      xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="StatisticsPage">
+      Title="StatisticsPage"
+      Loaded="Page_Loaded">
 
     <Grid>
-        <TextBlock FontSize="28"> Statistics</TextBlock>
+        <StackPanel Margin="2" Background="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+            
+            <Label Content="Biểu đồ doanh thu hàng tháng, năm" HorizontalAlignment="Center"></Label>
+                <ComboBox Name="YearForMonthlyChart" ItemsSource="{Binding MonthlyChartYear}" Margin="0 -2 0 0" SelectionChanged="YearForMonthlyChart_SelectionChanged">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"></TextBlock>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+            <lvc:CartesianChart LegendLocation="None" Hoverable="True" Height="300" MinWidth="900" DataTooltip="{x:Null}" Series="{Binding MonthlyChart}" Margin="5 0 20 0">
+                <lvc:CartesianChart.AxisX>
+                    <lvc:AxesCollection>
+                        <lvc:Axis Labels="{Binding MonthLabel}" Title="Tháng">
+                            <lvc:Axis.Separator>
+                                <lvc:Separator Step="1" />
+                            </lvc:Axis.Separator>
+                        </lvc:Axis>
+                    </lvc:AxesCollection>
+                </lvc:CartesianChart.AxisX>
+                <lvc:CartesianChart.AxisY>
+                    <lvc:Axis Title="Doanh thu" LabelFormatter="{Binding MonthlyLabelFormat}"></lvc:Axis>
+                </lvc:CartesianChart.AxisY>
+            </lvc:CartesianChart>
+        </StackPanel>
     </Grid>
 </Page>
