@@ -200,9 +200,10 @@ namespace CakeShopProject
 
 		private void openReceiptList()
         {
-			menuBar.Visibility = Visibility.Visible;
+			menuBar.Visibility = Visibility.Collapsed;
 			var receiptListPage = new ReceiptPage();
 			receiptListPage.ReceiptClicked += openReceiptEditMode;
+			receiptListPage.BackBtnClick += ShowMenuBarOnly;
 			this.content.Navigate(receiptListPage);
 		}
 
@@ -251,6 +252,11 @@ namespace CakeShopProject
 			myBill = tempBill;
         }
 
-		
+		private void ShowMenuBarOnly()
+		{
+			menuBar.Visibility = Visibility.Visible;
+		}
+
+
 	}
 }

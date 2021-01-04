@@ -25,6 +25,9 @@ namespace CakeShopProject
 		public delegate void ReceiptEditHandler(string receiptId);
 		public event ReceiptEditHandler ReceiptClicked;
 
+		public delegate void ClosingHandler();
+		public event ClosingHandler BackBtnClick;
+
 		int _current_page = 1;
 		int _total_items;
 		int _itemPerPage = 10;
@@ -112,6 +115,11 @@ namespace CakeShopProject
 				result.Add(viewModel);
 			}
 			return result;
+		}
+		private void backButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.NavigationService.GoBack();
+			BackBtnClick?.Invoke();
 		}
 
 		private List<BILL> GetSearchedData()
