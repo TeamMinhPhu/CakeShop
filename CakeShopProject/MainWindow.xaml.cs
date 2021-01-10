@@ -109,7 +109,10 @@ namespace CakeShopProject
 
 		private void infoButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			this.content.Navigate(new InfoPage());
+			menuBar.Visibility = Visibility.Collapsed;
+			var newInfoPage = new InfoPage();
+			newInfoPage.BackBtnClick += ShowMenuBarOnly;
+			this.content.Navigate(newInfoPage);
 		}
 		private void settingsButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{

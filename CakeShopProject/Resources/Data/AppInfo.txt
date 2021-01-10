@@ -1,0 +1,1 @@
+Phần mềm hỗ trợ người dùng quản lý bánh kẹo trong cửa hàng. Người dùng có thể thêm những loại bánh mới, phân loại bánh, tìm kiếm bánh. Bên cạnh đó phần mềm hỗ trợ quản lý đơn hàng, thêm đơn hàng mới, xem danh sách đơn hàng, thống kê doanh thu theo tháng, từng loại bánh.

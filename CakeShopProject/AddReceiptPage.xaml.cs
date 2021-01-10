@@ -292,6 +292,10 @@ namespace CakeShopProject
 
 			BILL newBill = new BILL();
 
+            if (!myBill.PREPAID_MONEY.HasValue)
+            {
+				myBill.PREPAID_MONEY = 0;
+            }
 
 			if (status != 0)
             {

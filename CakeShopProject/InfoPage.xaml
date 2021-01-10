@@ -5,10 +5,59 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CakeShopProject"
       mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       d:DesignHeight="450" d:DesignWidth="800"
+      Loaded="Page_Loaded"
       Title="InfoPage">
 
     <Grid>
-        <TextBlock FontSize="28">Info</TextBlock>
+        <Button Width="25" Height="25" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="2.5" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
+            <materialDesign:PackIcon Kind="ArrowBack" Width="20" Height="20" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
+        </Button>
+        <ScrollViewer>
+            <WrapPanel HorizontalAlignment="Center" Orientation="Vertical">
+                <StackPanel HorizontalAlignment="Center">
+                    <Label Content="Thông tin thành viên" FontSize="30" FontWeight="Bold" Margin="0,20,0,20" HorizontalContentAlignment="Center"/>
+                    <ListView Name="MembersListView">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="{x:Type ListViewItem}">
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                            <ContentPresenter />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <WrapPanel Orientation="Vertical" Margin="30,0,30,0">
+                                    <Ellipse Height="200" Width="200">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="{Binding Source, Converter={StaticResource converter}}" Stretch="Fill" RenderOptions.BitmapScalingMode="HighQuality"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                    <ScrollViewer MaxHeight="500" VerticalScrollBarVisibility="Hidden" Margin="0,30,0,0">
+                                        <TextBlock Foreground="{DynamicResource PrimaryHueMidBrush}" Text="{Binding Info}" MaxWidth="300" TextWrapping="Wrap" FontSize="18" Background="Transparent"/>
+                                    </ScrollViewer>
+                                </WrapPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+
+                <StackPanel HorizontalAlignment="Center">
+                    <Label Content="Thông tin sản phẩm" FontSize="30" FontWeight="Bold" Margin="0,40,0,20" HorizontalContentAlignment="Center"/>
+                    <TextBlock x:Name="AppInfo" Foreground="{DynamicResource PrimaryHueMidBrush}" MaxWidth="700" FontSize="18" TextWrapping="Wrap" TextAlignment="Justify" MaxHeight="500" Margin="0,0,0,40"/>
+                </StackPanel>
+            </WrapPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

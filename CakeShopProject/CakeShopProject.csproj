@@ -131,6 +131,7 @@
     <Compile Include="CAKE_IMAGES.cs">
       <DependentUpon>CakeShopDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Classes\MemberDao.cs" />
     <Compile Include="Classes\MyFileManager.cs" />
     <Compile Include="Classes\Paging.cs" />
     <Compile Include="Classes\ViewModel.cs" />
@@ -272,6 +273,18 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>CakeShopDB.mdf</DependentUpon>
     </Content>
+    <None Include="Resources\Images\18120206.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Images\18120222.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Data\AppInfo.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Data\Members.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\Images\sora.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
