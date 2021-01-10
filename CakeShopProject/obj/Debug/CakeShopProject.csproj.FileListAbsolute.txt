@@ -325,3 +325,7 @@ C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Ima
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\DetailCakePage.g.cs
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\DetailCakePage.baml
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.csprojAssemblyReference.cache
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Images\18120206.jpg
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Images\18120222.jpg
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Data\AppInfo.txt
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Data\Members.txt

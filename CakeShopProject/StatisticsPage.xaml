@@ -56,7 +56,7 @@
                     <Label FontSize="14">Đến</Label>
                     <DatePicker Name="dateEnd" FontSize="14" SelectedDateChanged="dateEnd_SelectedDateChanged"></DatePicker>
                 </StackPanel>
-                <lvc:PieChart LegendLocation="Bottom" Hoverable="True" Height="300" DataTooltip="{x:Null}" Series="{Binding TypeChart}" Margin="5 0 20 0">
+                <lvc:PieChart LegendLocation="Bottom" Hoverable="True" Height="300" Series="{Binding TypeChart}" Margin="5 0 20 0">
                 </lvc:PieChart>
             </StackPanel>
         </StackPanel>

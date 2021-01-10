@@ -23,6 +23,7 @@ namespace CakeShopProject
 	public partial class StatisticsPage : Page
 	{
 		int _current_year;
+		bool _is_init = false;
 		public delegate void ClosingHandler();
 		public event ClosingHandler BackBtnClick;
 		public SeriesCollection MonthlyChart { get; set; } = new SeriesCollection();
@@ -53,8 +54,11 @@ namespace CakeShopProject
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			YearComboBox();
+			
+
 			dateBegin.SelectedDate = new DateTime(2018, 1, 1);
 			dateEnd.SelectedDate = DateTime.Now;
+			_is_init = true;
 			cakeTypeChart();
 			this.DataContext = this;
 		}
@@ -136,9 +140,11 @@ namespace CakeShopProject
 			var bills = db.BILLs.Where(c => c.STATUS == 2 && c.COMPLETED_DATE >= dateBegin.SelectedDate && c.COMPLETED_DATE <= DateTime.Now).Select(c => c.BILL_ID).ToList();
 			var billDetails = db.BILLDETAILs.Where(c => bills.Contains(c.BILL_ID)).ToList();
 
-			
+			if (_is_init)
+			{
+				TypeChart.Clear(); //erase old data
 
-			TypeChart.Clear(); //erase old data
+			}
 			foreach (var type in types)
 			{
 				long total = 0;
@@ -166,13 +172,18 @@ namespace CakeShopProject
 
 		private void dateBegin_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
 		{
-			//cakeTypeChart();
-
+			if (_is_init == true)
+			{
+				cakeTypeChart();
+			}
 		}
 
 		private void dateEnd_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
 		{
-			//cakeTypeChart();
+			if (_is_init == true)
+			{
+				cakeTypeChart();
+			}
 		}
 	}
 }
