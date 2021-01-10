@@ -47,7 +47,6 @@ C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakeShopProje
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.csproj.CopyComplete
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.exe
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.pdb
-C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.csprojAssemblyReference.cache
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\AddCakePage.g.cs
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakePage.g.cs
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\AddCakePage.baml
@@ -325,3 +324,4 @@ D:\Minh\This Week\Window\Project3\version 1.6\CakeShopProject\obj\Debug\CakeShop
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Images\sora.jpg
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\DetailCakePage.g.cs
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\DetailCakePage.baml
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\CakeShopProject.csprojAssemblyReference.cache

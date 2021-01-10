@@ -23,11 +23,11 @@ namespace CakeShopProject
 	public partial class StatisticsPage : Page
 	{
 		int _current_year;
-		int _selected_year;
+		public delegate void ClosingHandler();
+		public event ClosingHandler BackBtnClick;
 		public SeriesCollection MonthlyChart { get; set; } = new SeriesCollection();
 		public SeriesCollection TypeChart { get; set; } = new SeriesCollection();
 		CakeShopDBEntities db = new CakeShopDBEntities();
-		public Func<double, string> MonthlyLabelFormat { get; set; }
 		public List<string> MonthlyChartYear { get; set; } = new List<string>();
 		public string[] MonthLabel { get; set; } = new string[]
 		{
@@ -110,11 +110,10 @@ namespace CakeShopProject
 						catch { /*do nothing*/ }
 
 					}
-					Revenue.Add(totalPrice / 1000);
+					Revenue.Add(totalPrice);
 
 				}
 
-				MonthlyLabelFormat = value => value + "K";
 				var newBar = new ColumnSeries()
 				{
 					Values = new ChartValues<long>(Revenue),
@@ -126,7 +125,6 @@ namespace CakeShopProject
 
 		private void YearForMonthlyChart_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			_selected_year = _current_year - YearForMonthlyChart.SelectedIndex;
 			SetupMonthlyChart();
 		}
 
@@ -154,6 +152,12 @@ namespace CakeShopProject
 
 				TypeChart.Add(newPie);
 			}
+		}
+
+		private void backButton_Click(object sender, RoutedEventArgs e)
+		{
+			this.NavigationService.GoBack();
+			BackBtnClick?.Invoke();
 		}
 	}
 }

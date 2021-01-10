@@ -105,7 +105,8 @@ namespace CakeShopProject
 			config.Save(ConfigurationSaveMode.Minimal);
 		}
 
-		#region "Navigate"
+		#region "Navigator handler"
+
 		private void infoButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
 			this.content.Navigate(new InfoPage());
@@ -133,7 +134,7 @@ namespace CakeShopProject
 
 		private void statisticsButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-			this.content.Navigate(new StatisticsPage());
+			openStatistics();
 		}
 
 		private void receiptListButton_MouseUp(object sender, MouseButtonEventArgs e)
@@ -143,20 +144,22 @@ namespace CakeShopProject
 
 		private void addReceiptButton_MouseUp(object sender, MouseButtonEventArgs e)
 		{
-            if (myBillDetail.Count > 0)
-            {
+			if (myBillDetail.Count > 0)
+			{
 				menuBar.Visibility = Visibility.Collapsed;
 				var newAddReceipt = new AddReceiptPage(myBillDetail, myBill);
 				newAddReceipt.BackBtnAddModeClick += ReceiptBackHandler;
 				newAddReceipt.DoneOrCancelBtnClick += resetBill;
 				this.content.Navigate(newAddReceipt);
 			}
-            else
-            {
+			else
+			{
 				MessageBox.Show("Chưa thêm bánh vào đơn hàng");
-            }
+			}
 		}
 		#endregion
+
+		#region "Navigate"
 
 		private void ShowMenuHandler()
 		{
@@ -205,6 +208,14 @@ namespace CakeShopProject
 			receiptListPage.ReceiptClicked += openReceiptEditMode;
 			receiptListPage.BackBtnClick += ShowMenuBarOnly;
 			this.content.Navigate(receiptListPage);
+		}
+
+		private void openStatistics()
+		{
+			menuBar.Visibility = Visibility.Collapsed;
+			var statisticsPage = new StatisticsPage();
+			statisticsPage.BackBtnClick += ShowMenuBarOnly;
+			this.content.Navigate(statisticsPage);
 		}
 
 		private void AddToReceipt(string Id)
@@ -257,6 +268,6 @@ namespace CakeShopProject
 			menuBar.Visibility = Visibility.Visible;
 		}
 
-
+		#endregion
 	}
 }

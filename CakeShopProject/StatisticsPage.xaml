@@ -13,7 +13,13 @@
       Loaded="Page_Loaded">
 
     <StackPanel>
-        <StackPanel Margin="2" Background="AliceBlue" HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid Height="50" VerticalAlignment="Top">
+            <Button Width="25" Height="25" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="2.5" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
+                <materialDesign:PackIcon Kind="ArrowBack" Width="20" Height="20" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
+            </Button>
+            <Label Content="Thống kê" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+        </Grid>
+        <StackPanel Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
             
             <Label Content="Biểu đồ doanh thu hàng tháng, năm" HorizontalAlignment="Center"></Label>
@@ -36,7 +42,7 @@
                     </lvc:AxesCollection>
                 </lvc:CartesianChart.AxisX>
                 <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Doanh thu" LabelFormatter="{Binding MonthlyLabelFormat}"></lvc:Axis>
+                    <lvc:Axis Title="Doanh thu (VNĐ)"></lvc:Axis>
                 </lvc:CartesianChart.AxisY>
             </lvc:CartesianChart>
         </StackPanel>
