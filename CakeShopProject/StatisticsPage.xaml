@@ -12,44 +12,53 @@
       Title="StatisticsPage"
       Loaded="Page_Loaded">
 
-    <StackPanel>
-        <Grid Height="50" VerticalAlignment="Top">
-            <Button Width="25" Height="25" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="2.5" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
-                <materialDesign:PackIcon Kind="ArrowBack" Width="20" Height="20" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
-            </Button>
-            <Label Content="Thống kê" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
-        </Grid>
-        <StackPanel Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
-            
-            <Label Content="Biểu đồ doanh thu hàng tháng, năm" HorizontalAlignment="Center"></Label>
-                <ComboBox Name="YearForMonthlyChart" ItemsSource="{Binding MonthlyChartYear}" Margin="0 -2 0 0" SelectionChanged="YearForMonthlyChart_SelectionChanged">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding}"></TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            </StackPanel>
-            <lvc:CartesianChart LegendLocation="None" Hoverable="True" Height="300" MinWidth="900" DataTooltip="{x:Null}" Series="{Binding MonthlyChart}" Margin="5 0 20 0">
-                <lvc:CartesianChart.AxisX>
-                    <lvc:AxesCollection>
-                        <lvc:Axis Labels="{Binding MonthLabel}" Title="Tháng">
-                            <lvc:Axis.Separator>
-                                <lvc:Separator Step="1" />
-                            </lvc:Axis.Separator>
-                        </lvc:Axis>
-                    </lvc:AxesCollection>
-                </lvc:CartesianChart.AxisX>
-                <lvc:CartesianChart.AxisY>
-                    <lvc:Axis Title="Doanh thu (VNĐ)"></lvc:Axis>
-                </lvc:CartesianChart.AxisY>
-            </lvc:CartesianChart>
-        </StackPanel>
+    <ScrollViewer>
+
         <StackPanel>
-            <lvc:PieChart LegendLocation="Right" Hoverable="True" Height="300" DataTooltip="{x:Null}" Series="{Binding TypeChart}" Margin="5 0 20 0">
-                
-            </lvc:PieChart>
+            <Grid Height="50" VerticalAlignment="Top">
+                <Button Width="25" Height="25" Padding="0" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Panel.ZIndex="10" Background="Transparent" BorderThickness="2.5" Click="backButton_Click" materialDesign:ButtonAssist.CornerRadius="50">
+                    <materialDesign:PackIcon Kind="ArrowBack" Width="20" Height="20" Foreground="{DynamicResource PrimaryHueMidBrush}"></materialDesign:PackIcon>
+                </Button>
+                <Label Content="Thống kê" Foreground="{DynamicResource PrimaryHueMidBrush}" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" VerticalContentAlignment="Center"></Label>
+            </Grid>
+            <StackPanel Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+                    <Label FontSize="16" Content="Biểu đồ doanh thu hàng tháng, năm" HorizontalAlignment="Center"></Label>
+                    <ComboBox Name="YearForMonthlyChart" ItemsSource="{Binding MonthlyChartYear}" Margin="0 -2 0 0" SelectionChanged="YearForMonthlyChart_SelectionChanged">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+                <lvc:CartesianChart LegendLocation="None" Hoverable="True" Height="300" MinWidth="900" DataTooltip="{x:Null}" Series="{Binding MonthlyChart}" Margin="5 0 20 0">
+                    <lvc:CartesianChart.AxisX>
+                        <lvc:AxesCollection>
+                            <lvc:Axis Labels="{Binding MonthLabel}" Title="Tháng">
+                                <lvc:Axis.Separator>
+                                    <lvc:Separator Step="1" />
+                                </lvc:Axis.Separator>
+                            </lvc:Axis>
+                        </lvc:AxesCollection>
+                    </lvc:CartesianChart.AxisX>
+                    <lvc:CartesianChart.AxisY>
+                        <lvc:Axis Title="Doanh thu (VNĐ)"></lvc:Axis>
+                    </lvc:CartesianChart.AxisY>
+                </lvc:CartesianChart>
+            </StackPanel>
+            <StackPanel>
+                <Label Margin="0 30 0 0" FontSize="16" Content="Biểu đồ doanh thu theo từng loại bánh" HorizontalAlignment="Center"></Label>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <Label FontSize="14">Từ Ngày</Label>
+                    <DatePicker Name="dateBegin" FontSize="14" SelectedDateChanged="dateBegin_SelectedDateChanged"></DatePicker>
+                    <Label FontSize="14">Đến</Label>
+                    <DatePicker Name="dateEnd" FontSize="14" SelectedDateChanged="dateEnd_SelectedDateChanged"></DatePicker>
+                </StackPanel>
+                <lvc:PieChart LegendLocation="Bottom" Hoverable="True" Height="300" DataTooltip="{x:Null}" Series="{Binding TypeChart}" Margin="5 0 20 0">
+                </lvc:PieChart>
+            </StackPanel>
         </StackPanel>
-    </StackPanel>
+    </ScrollViewer>
 </Page>

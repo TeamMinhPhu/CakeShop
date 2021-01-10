@@ -53,6 +53,8 @@ namespace CakeShopProject
 		private void Page_Loaded(object sender, RoutedEventArgs e)
 		{
 			YearComboBox();
+			dateBegin.SelectedDate = new DateTime(2018, 1, 1);
+			dateEnd.SelectedDate = DateTime.Now;
 			cakeTypeChart();
 			this.DataContext = this;
 		}
@@ -131,8 +133,10 @@ namespace CakeShopProject
 		private void cakeTypeChart()
 		{
 			var types = db.TYPEs.ToList();
-			var bills = db.BILLs.Where(c => c.STATUS == 2).Select(c => c.BILL_ID).ToList();
+			var bills = db.BILLs.Where(c => c.STATUS == 2 && c.COMPLETED_DATE >= dateBegin.SelectedDate && c.COMPLETED_DATE <= DateTime.Now).Select(c => c.BILL_ID).ToList();
 			var billDetails = db.BILLDETAILs.Where(c => bills.Contains(c.BILL_ID)).ToList();
+
+			
 
 			TypeChart.Clear(); //erase old data
 			foreach (var type in types)
@@ -158,6 +162,17 @@ namespace CakeShopProject
 		{
 			this.NavigationService.GoBack();
 			BackBtnClick?.Invoke();
+		}
+
+		private void dateBegin_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+		{
+			//cakeTypeChart();
+
+		}
+
+		private void dateEnd_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+		{
+			//cakeTypeChart();
 		}
 	}
 }
