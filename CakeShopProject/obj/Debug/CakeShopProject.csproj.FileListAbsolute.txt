@@ -329,3 +329,6 @@ C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Ima
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Images\18120222.jpg
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Data\AppInfo.txt
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Data\Members.txt
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\SplashScreen.g.cs
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\obj\Debug\SplashScreen.baml
+C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\bin\Debug\Resources\Data\facts.txt

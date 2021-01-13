@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\Admin\Documents\GitHub\CakeShop\CakeShopProject\App.xaml
-9-1784475490
+10386365643
 41934860020
-27-1466578797
+28-865945073
 23-828734419
-AddCakePage.xaml;AddReceiptPage.xaml;CakePage.xaml;DetailCakePage.xaml;InfoPage.xaml;MainWindow.xaml;ReceiptPage.xaml;SettingsScreen.xaml;StatisticsPage.xaml;
+AddCakePage.xaml;AddReceiptPage.xaml;CakePage.xaml;DetailCakePage.xaml;InfoPage.xaml;MainWindow.xaml;ReceiptPage.xaml;SettingsScreen.xaml;SplashScreen.xaml;StatisticsPage.xaml;
 
-True
+False
 
